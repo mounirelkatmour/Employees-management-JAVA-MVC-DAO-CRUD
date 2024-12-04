@@ -2,10 +2,8 @@ package View;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-
 import Model.Poste;
 import Model.Role;
-
 import java.awt.*;
 public class EmployeeView extends JFrame {
     private JPanel General = new JPanel();
@@ -15,6 +13,25 @@ public class EmployeeView extends JFrame {
     private JPanel ButtonsContainer = new JPanel();
     private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire"}, 0);
     private JTable Tableau = new JTable(tableModel);
+    public JButton Ajouter = new JButton("Ajouter");
+    public JButton Modifier = new JButton("Modifier");
+    public JButton Supprimer = new JButton("Supprimer");
+    public JButton Afficher = new JButton("Afficher");
+    public JLabel NomLabel;
+    public JTextField Nom;
+    public JLabel PrenomLabel;
+    public JTextField Prenom;
+    public JLabel EmailLabel;
+    public JTextField Email;
+    public JLabel TelephoneLabel;
+    public JTextField Telephone;
+    public JLabel SalaireLabel;
+    public JTextField Salaire;
+    public JLabel RoleLabel;
+    public JComboBox<Role> RoleComboBox;
+    public JLabel PosteLabel;
+    public JComboBox<Poste> PosteComboBox;
+
     public EmployeeView() {
         setTitle("Gestion des employés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -25,21 +42,33 @@ public class EmployeeView extends JFrame {
         General.add(GeneralUp, BorderLayout.NORTH);
         General.add(GeneralDown, BorderLayout.CENTER);
         GeneralUp.setLayout(new GridLayout(7,2));
-        GeneralUp.add(new JLabel("Nom"));
-        GeneralUp.add(new JTextField());
-        GeneralUp.add(new JLabel("Prénom"));
-        GeneralUp.add(new JTextField());
-        GeneralUp.add(new JLabel("Email"));
-        GeneralUp.add(new JTextField());
-        GeneralUp.add(new JLabel("Téléphone"));
-        GeneralUp.add(new JTextField());
-        GeneralUp.add(new JLabel("Salaire"));
-        GeneralUp.add(new JTextField());
-        GeneralUp.add(new JLabel("Role"));
-        JComboBox<Role> RoleComboBox = new JComboBox<>(Role.values());
+        NomLabel = new JLabel("Nom");
+        Nom = new JTextField();
+        GeneralUp.add(NomLabel);
+        GeneralUp.add(Nom);
+        PrenomLabel = new JLabel("Prénom");
+        Prenom = new JTextField();
+        GeneralUp.add(PrenomLabel);
+        GeneralUp.add(Prenom);
+        EmailLabel = new JLabel("Email");
+        Email = new JTextField();
+        GeneralUp.add(EmailLabel);
+        GeneralUp.add(Email);
+        TelephoneLabel = new JLabel("Téléphone");
+        Telephone = new JTextField();
+        GeneralUp.add(TelephoneLabel);
+        GeneralUp.add(Telephone);
+        SalaireLabel = new JLabel("Salaire");
+        Salaire = new JTextField();
+        GeneralUp.add(SalaireLabel);
+        GeneralUp.add(Salaire);
+        RoleLabel = new JLabel("Role");
+        RoleComboBox = new JComboBox<>(Role.values());
+        GeneralUp.add(RoleLabel);
         GeneralUp.add(RoleComboBox);
-        GeneralUp.add(new JLabel("Poste"));
-        JComboBox<Poste> PosteComboBox = new JComboBox<>(Poste.values());
+        PosteLabel = new JLabel("Poste");
+        PosteComboBox = new JComboBox<>(Poste.values());
+        GeneralUp.add(PosteLabel);
         GeneralUp.add(PosteComboBox);
         GeneralDown.setLayout(new BorderLayout());
         GeneralDown.add(ListContainer, BorderLayout.CENTER);
@@ -50,10 +79,10 @@ public class EmployeeView extends JFrame {
         ListContainer.add(new JScrollPane(Tableau));
         GeneralDown.add(ButtonsContainer, BorderLayout.SOUTH);
         ButtonsContainer.setLayout(new FlowLayout());
-        ButtonsContainer.add(new JButton("Ajouter"));
-        ButtonsContainer.add(new JButton("Modifier"));
-        ButtonsContainer.add(new JButton("Supprimer"));
-        ButtonsContainer.add(new JButton("Afficher"));
+        ButtonsContainer.add(Ajouter);
+        ButtonsContainer.add(Modifier);
+        ButtonsContainer.add(Supprimer);
+        ButtonsContainer.add(Afficher);
         setVisible(true);
     }
 }

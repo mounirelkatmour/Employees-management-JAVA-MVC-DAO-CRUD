@@ -6,11 +6,11 @@ import Model.Poste;
 import Model.Role;
 
 public interface EmployeeDAOI {
-    Employee findByEmail(int EmployeeId);
-    List<Employee> findAll();
-    void add(Employee employee);
-    void update(Employee employee,int EmployeeId);
-    void delete(int EmployeeId);
-    List<Role> findAllRoles();
-    List<Poste> findAllPosts();
+    public Employee findByEmail(int EmployeeId);
+    public List<Employee> findAll();
+    public void ajouterEmployee(Employee employee);
+    public void update(Employee employee,int EmployeeId);
+    public void delete(int EmployeeId);
+    public List<Role> findAllRoles();
+    public List<Poste> findAllPosts();
 }
