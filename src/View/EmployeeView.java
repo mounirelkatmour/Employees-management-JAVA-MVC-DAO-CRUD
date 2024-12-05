@@ -14,7 +14,12 @@ public class EmployeeView extends JFrame {
     private JPanel GeneralDown = new JPanel();
     private JPanel ListContainer = new JPanel();
     private JPanel ButtonsContainer = new JPanel();
-    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire"}, 0);
+    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire"}, 0){
+        @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+    };
     public JTable Tableau = new JTable(tableModel);
     public JButton Ajouter = new JButton("Ajouter");
     public JButton Modifier = new JButton("Modifier");
@@ -96,6 +101,12 @@ public class EmployeeView extends JFrame {
         JOptionPane.showMessageDialog(null, "L'employé n'a pas été ajouté. " + message);
     }
     public static void AfficherFail(String message){
+        JOptionPane.showMessageDialog(null, message);
+    }
+    public static void SupprimerSuccess(){
+        JOptionPane.showMessageDialog(null, "L'employé a bien éte supprimé.");
+    }
+    public static void SupprimerFail(String message){
         JOptionPane.showMessageDialog(null, message);
     }
 

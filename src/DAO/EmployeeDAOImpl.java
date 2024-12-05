@@ -198,11 +198,12 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         }
     }
     @Override
-    public void delete(int EmployeeId) {
+    public void supprimerEmployee(int EmployeeId) {
         String SQL = "DELETE FROM employee WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, EmployeeId);
             stmt.executeUpdate();
+            EmployeeView.SupprimerSuccess();
         } catch (SQLException e) {
             e.printStackTrace();
         }

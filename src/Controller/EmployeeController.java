@@ -48,6 +48,7 @@ public class EmployeeController {
                 this.findBySalaire(salaire);
             }
         });
+        this.employeeView.Supprimer.addActionListener(e -> supprimerEmployee());
         this.afficherEmployee();
     }
     public void ajouterEmployee() {
@@ -120,5 +121,20 @@ public class EmployeeController {
         for(Employee e : employees) {
             tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
         }
+    }
+    public void supprimerEmployee() {
+        int selectedRow = employeeView.Tableau.getSelectedRow();
+        if (selectedRow != -1) {
+            try {
+                int id = Integer.parseInt(employeeView.Tableau.getModel().getValueAt(selectedRow, 0).toString());
+                System.out.println("Selected ID: " + id);
+                employeeModel.supprimerEmployee(id);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid ID format.");
+            }
+        } else {
+            EmployeeView.SupprimerFail("Veuillez choisir un employé.");
+        }
+        this.afficherEmployee();
     }
 }

@@ -56,4 +56,7 @@ public class EmployeeModel {
     public List<Employee> findBySalaire(double salaire) {
         return dao.findBySalaire(salaire);
     }
+    public void supprimerEmployee(int id) {
+        dao.supprimerEmployee(id);
+    }
 }

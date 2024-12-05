@@ -9,7 +9,7 @@ public interface EmployeeDAOI {
     public void ajouterEmployee(Employee employee);
     public List<Employee> afficherEmployee();
     public void update(Employee employee,int EmployeeId);
-    public void delete(int EmployeeId);
+    public void supprimerEmployee(int EmployeeId);
     public List<Employee> findByEmail(String email);
     public List<Employee> findByFirstName(String firstname);
     public List<Employee> findByLastName(String lastname);
