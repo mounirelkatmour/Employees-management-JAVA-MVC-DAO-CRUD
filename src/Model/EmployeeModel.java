@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.List;
+
 import DAO.EmployeeDAOImpl;
 import Utilities.Utils;
 import View.EmployeeView;
@@ -32,5 +34,11 @@ public class EmployeeModel {
         
         Employee employee = new Employee(0, nom, prenom, salaireDouble, email, phone, role, poste);
         dao.ajouterEmployee(employee);
+    }
+    public List<Employee> afficherEmployee() {
+        return dao.afficherEmployee();
+    }
+    public List<Employee> findByEmail(String email) {
+        return dao.findByEmail(email);
     }
 }

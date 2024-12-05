@@ -40,30 +40,38 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         }
     }
     @Override
-    public Employee findByEmail(int EmployeeId) {
-        String SQL = "SELECT * FROM employee WHERE email = ?";
-        Employee employee = null;
+    public List<Employee> afficherEmployee() {
+        String SQL = "SELECT * FROM employee";
+        List<Employee> employees = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
-            stmt.setInt(1, EmployeeId);
             try (ResultSet rset = stmt.executeQuery()) {
-                if (rset.next()) {
-                    employee = new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")));
+                while (rset.next()) {
+                    int id = rset.getInt("id");
+                    String nom = rset.getString("nom");
+                    String prenom = rset.getString("prenom");
+                    double salaire = rset.getDouble("salaire");
+                    String email = rset.getString("email");
+                    String phone = rset.getString("phone");
+                    String role = rset.getString("role");
+                    String poste = rset.getString("poste");
+                    employees.add(new Employee(id, nom, prenom, salaire, email, phone, Role.valueOf(role), Poste.valueOf(poste)));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return employee;
+        return employees;
     }
     @Override
-    public List<Employee> findAll() {
-        String SQL = "SELECT * FROM employee";
-        List<Employee> employees = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(SQL);
-                ResultSet rset = stmt.executeQuery()) {
-            while (rset.next()) {
-                Employee employee = new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")));
-                employees.add(employee);
+    public List<Employee> findByEmail(String email) {
+        String SQL = "SELECT * FROM employee WHERE email = ?";
+        List<Employee> employees = new ArrayList<Employee>();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, email);
+            try (ResultSet rset = stmt.executeQuery()) {
+                while(rset.next()) {
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -15,7 +15,7 @@ public class EmployeeView extends JFrame {
     private JPanel ListContainer = new JPanel();
     private JPanel ButtonsContainer = new JPanel();
     private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire"}, 0);
-    private JTable Tableau = new JTable(tableModel);
+    public JTable Tableau = new JTable(tableModel);
     public JButton Ajouter = new JButton("Ajouter");
     public JButton Modifier = new JButton("Modifier");
     public JButton Supprimer = new JButton("Supprimer");
@@ -38,13 +38,14 @@ public class EmployeeView extends JFrame {
     private EmployeeView() {
         setTitle("Gestion des employés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(530, 320);
+        setSize(930, 520);
         setLocationRelativeTo(null);
         add(General);
         General.setLayout(new BorderLayout());
         General.add(GeneralUp, BorderLayout.NORTH);
         General.add(GeneralDown, BorderLayout.CENTER);
         GeneralUp.setLayout(new GridLayout(7,2));
+        GeneralUp.setBorder(BorderFactory.createEmptyBorder(10, 18, 10, 18));
         NomLabel = new JLabel("Nom");
         Nom = new JTextField();
         GeneralUp.add(NomLabel);
@@ -76,9 +77,9 @@ public class EmployeeView extends JFrame {
         GeneralDown.setLayout(new BorderLayout());
         GeneralDown.add(ListContainer, BorderLayout.CENTER);
         ListContainer.setLayout(new FlowLayout());
-        Tableau.setFillsViewportHeight(true);
-        Dimension preferredSize = new Dimension(500, 150);
+        Dimension preferredSize = new Dimension(EmployeeView.this.getWidth() - 50,500);
         Tableau.setPreferredScrollableViewportSize(preferredSize);
+        Tableau.setFillsViewportHeight(true);
         ListContainer.add(new JScrollPane(Tableau));
         GeneralDown.add(ButtonsContainer, BorderLayout.SOUTH);
         ButtonsContainer.setLayout(new FlowLayout());
