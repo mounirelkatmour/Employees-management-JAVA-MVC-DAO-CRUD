@@ -27,13 +27,15 @@ public class EmployeeController {
                 String lastname = employeeView.Prenom.getText();
                 this.findByFullName(firstname,lastname);
             }
-            if (!employeeView.Nom.getText().isEmpty()) {
-                String lastname = employeeView.Nom.getText();
-                this.findByLastName(lastname);
-            }
-            if (!employeeView.Prenom.getText().isEmpty()) {
-                String firstname = employeeView.Prenom.getText();
-                this.findByFirstName(firstname);
+            if (employeeView.Nom.getText().isEmpty() || employeeView.Prenom.getText().isEmpty() ){
+                if (!employeeView.Nom.getText().isEmpty()) {
+                    String lastname = employeeView.Nom.getText();
+                    this.findByLastName(lastname);
+                }
+                if (!employeeView.Prenom.getText().isEmpty()) {
+                    String firstname = employeeView.Prenom.getText();
+                    this.findByFirstName(firstname);
+                }
             }
             if (!employeeView.Telephone.getText().isEmpty()) {
                 String phone = employeeView.Telephone.getText();
