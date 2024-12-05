@@ -41,4 +41,19 @@ public class EmployeeModel {
     public List<Employee> findByEmail(String email) {
         return dao.findByEmail(email);
     }
+    public List<Employee> findByFullName(String firstname,String lastname) {
+        return dao.findByFullName(firstname,lastname);
+    }
+    public List<Employee> findByFirstName(String firstname) {
+        return dao.findByFirstName(firstname);
+    }
+    public List<Employee> findByLastName(String lastname) {
+        return dao.findByLastName(lastname);
+    }
+    public List<Employee> findByPhone(String phone) {
+        return dao.findByPhone(phone);
+    }
+    public List<Employee> findBySalaire(double salaire) {
+        return dao.findBySalaire(salaire);
+    }
 }

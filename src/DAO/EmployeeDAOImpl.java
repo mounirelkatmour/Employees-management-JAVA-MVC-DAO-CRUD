@@ -60,6 +60,9 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé.");
+        }
         return employees;
     }
     @Override
@@ -75,6 +78,105 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé avec cet adresse Email.");
+        }
+        return employees;
+    }
+    @Override
+    public List<Employee> findByFullName(String firstname,String lastname) {
+        String SQL = "SELECT * FROM employee WHERE nom = ? AND prenom = ?";
+        List<Employee> employees = new ArrayList<Employee>();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, lastname);
+            stmt.setString(2, firstname);
+            try (ResultSet rset = stmt.executeQuery()) {
+                while(rset.next()) {
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé avec ce nom et prenom.");
+        }
+        return employees;
+    }
+    @Override
+    public List<Employee> findByFirstName(String firstname) {
+        String SQL = "SELECT * FROM employee WHERE prenom = ?";
+        List<Employee> employees = new ArrayList<Employee>();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, firstname);
+            try (ResultSet rset = stmt.executeQuery()) {
+                while(rset.next()) {
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé avec ce prenom.");
+        }
+        return employees;
+    }
+    @Override
+    public List<Employee> findByLastName(String lastname) {
+        String SQL = "SELECT * FROM employee WHERE nom = ?";
+        List<Employee> employees = new ArrayList<Employee>();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, lastname);
+            try (ResultSet rset = stmt.executeQuery()) {
+                while(rset.next()) {
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé avec ce nom.");
+        }
+        return employees;
+    }
+    @Override
+    public List<Employee> findByPhone(String phone) {
+        String SQL = "SELECT * FROM employee WHERE phone = ?";
+        List<Employee> employees = new ArrayList<Employee>();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, phone);
+            try (ResultSet rset = stmt.executeQuery()) {
+                while(rset.next()) {
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé avec ce numéro de telephone.");
+        }
+        return employees;
+    }
+    @Override
+    public List<Employee> findBySalaire(double salaire) {
+        String SQL = "SELECT * FROM employee WHERE salaire = ?";
+        List<Employee> employees = new ArrayList<Employee>();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setDouble(1, salaire);
+            try (ResultSet rset = stmt.executeQuery()) {
+                while(rset.next()) {
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (employees.isEmpty()) {
+            EmployeeView.AfficherFail("Aucun employé a été trouvé avec ce salaire.");
         }
         return employees;
     }

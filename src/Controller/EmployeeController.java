@@ -21,9 +21,31 @@ public class EmployeeController {
             if (employeeView.Nom.getText().isEmpty() && employeeView.Prenom.getText().isEmpty() && employeeView.Salaire.getText().isEmpty() && employeeView.Email.getText().isEmpty() && employeeView.Telephone.getText().isEmpty()) {
                 this.afficherEmployee();
             }
+            if (!employeeView.Nom.getText().isEmpty() && !employeeView.Prenom.getText().isEmpty()){
+                String firstname = employeeView.Nom.getText();
+                String lastname = employeeView.Prenom.getText();
+                this.findByFullName(firstname,lastname);
+            }
+            if (!employeeView.Nom.getText().isEmpty()) {
+                String lastname = employeeView.Nom.getText();
+                this.findByLastName(lastname);
+            }
+            if (!employeeView.Prenom.getText().isEmpty()) {
+                String firstname = employeeView.Prenom.getText();
+                this.findByFirstName(firstname);
+            }
+            if (!employeeView.Telephone.getText().isEmpty()) {
+                String phone = employeeView.Telephone.getText();
+                this.findByPhone(phone);
+            }
             if (!employeeView.Email.getText().isEmpty()) {
                 String email = employeeView.Email.getText();
                 this.findByEmail(email);
+            }
+            if (!employeeView.Salaire.getText().isEmpty()) {
+                String salaireString = employeeView.Salaire.getText();
+                double salaire = Double.parseDouble(salaireString);
+                this.findBySalaire(salaire);
             }
         });
         this.afficherEmployee();
@@ -52,7 +74,50 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            // System.out.println(e.getId() + " " + e.getNom() + " " + e.getPrenom() + " " + e.getEmail() + " " + e.getSalaire());
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+        }
+    }
+    public void findByFullName(String firstname, String lastname) {
+        firstname = employeeView.Prenom.getText();
+        lastname = employeeView.Nom.getText();
+        List<Employee> employees = employeeModel.findByFullName(firstname,lastname);
+        DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
+        tableModel.setRowCount(0);
+        for(Employee e : employees) {
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+        }
+    }
+    public void findByFirstName(String firstname) {
+        firstname = employeeView.Prenom.getText();
+        List<Employee> employees = employeeModel.findByFirstName(firstname);
+        DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
+        tableModel.setRowCount(0);
+        for(Employee e : employees) {
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+        }
+    }
+    public void findByLastName(String lastname) {
+        lastname = employeeView.Nom.getText();
+        List<Employee> employees = employeeModel.findByLastName(lastname);
+        DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
+        tableModel.setRowCount(0);
+        for(Employee e : employees) {
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+        }
+    }
+    public void findByPhone(String phone) {
+        List<Employee> employees = employeeModel.findByPhone(phone);
+        DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
+        tableModel.setRowCount(0);
+        for(Employee e : employees) {
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+        }
+    }
+    public void findBySalaire(double salaire) {
+        List<Employee> employees = employeeModel.findBySalaire(salaire);
+        DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
+        tableModel.setRowCount(0);
+        for(Employee e : employees) {
             tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
         }
     }

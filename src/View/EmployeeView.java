@@ -95,6 +95,9 @@ public class EmployeeView extends JFrame {
     public static void AjouterFail(String message){
         JOptionPane.showMessageDialog(null, "L'employé n'a pas été ajouté. " + message);
     }
+    public static void AfficherFail(String message){
+        JOptionPane.showMessageDialog(null, message);
+    }
 
     public static EmployeeView getInstance() {
         return INSTANCE;
