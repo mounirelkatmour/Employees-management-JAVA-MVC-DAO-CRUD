@@ -123,6 +123,10 @@ public class EmployeeView extends JFrame {
         Tableau.getColumnModel().getColumn(index).setMaxWidth(0);
         Tableau.getColumnModel().getColumn(index).setWidth(0);
     }
+    public static boolean SupprimerConfirmation(){
+        int choice = JOptionPane.showOptionDialog(null, "Êtes-vous sûr de supprimer cet employé?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Oui", "Non"}, "Non");
+        return choice == JOptionPane.YES_OPTION;
+    }
 
     public static EmployeeView getInstance() {
         return INSTANCE;

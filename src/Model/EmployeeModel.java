@@ -59,7 +59,10 @@ public class EmployeeModel {
         return dao.findBySalaire(salaire);
     }
     public void supprimerEmployee(int id) {
-        dao.supprimerEmployee(id);
+        if(EmployeeView.SupprimerConfirmation()){
+            dao.supprimerEmployee(id);
+        }
+        return;
     }
     public Employee findById(int id) {
         return dao.findById(id);
