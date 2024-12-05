@@ -8,7 +8,7 @@ import Model.Role;
 public interface EmployeeDAOI {
     public void ajouterEmployee(Employee employee);
     public List<Employee> afficherEmployee();
-    public void update(Employee employee,int EmployeeId);
+    public void modifierEmployee(Employee employee,int EmployeeId);
     public void supprimerEmployee(int EmployeeId);
     public List<Employee> findByEmail(String email);
     public List<Employee> findByFirstName(String firstname);
@@ -16,6 +16,7 @@ public interface EmployeeDAOI {
     public List<Employee> findByFullName(String firstname,String lastname);
     public List<Employee> findByPhone(String phone);
     public List<Employee> findBySalaire(double salaire);
+    public Employee findById(int EmployeeId);
     public List<Role> findAllRoles();
     public List<Poste> findAllPosts();
 }

@@ -14,7 +14,7 @@ public class EmployeeView extends JFrame {
     private JPanel GeneralDown = new JPanel();
     private JPanel ListContainer = new JPanel();
     private JPanel ButtonsContainer = new JPanel();
-    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire"}, 0){
+    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire", "Phone", "Role", "Poste"}, 0){
         @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -86,6 +86,9 @@ public class EmployeeView extends JFrame {
         Tableau.setPreferredScrollableViewportSize(preferredSize);
         Tableau.setFillsViewportHeight(true);
         ListContainer.add(new JScrollPane(Tableau));
+        this.CacherColumn(5);
+        this.CacherColumn(6);
+        this.CacherColumn(7);
         GeneralDown.add(ButtonsContainer, BorderLayout.SOUTH);
         ButtonsContainer.setLayout(new FlowLayout());
         ButtonsContainer.add(Ajouter);
@@ -108,6 +111,17 @@ public class EmployeeView extends JFrame {
     }
     public static void SupprimerFail(String message){
         JOptionPane.showMessageDialog(null, message);
+    }
+    public static void ModifierSuccess(){
+        JOptionPane.showMessageDialog(null, "L'employé a bien été modifié.");
+    }
+    public static void ModifierFail(String message){
+        JOptionPane.showMessageDialog(null, message);
+    }
+    private void CacherColumn(int index){
+        Tableau.getColumnModel().getColumn(index).setMinWidth(0);
+        Tableau.getColumnModel().getColumn(index).setMaxWidth(0);
+        Tableau.getColumnModel().getColumn(index).setWidth(0);
     }
 
     public static EmployeeView getInstance() {

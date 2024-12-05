@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import Controller.EmployeeController;
 import Model.Employee;
 import Model.Poste;
 import Model.Role;
@@ -181,7 +182,25 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         return employees;
     }
     @Override
-    public void update(Employee employee, int EmployeeId) {
+    public Employee findById(int EmployeeId) {
+        String SQL = "SELECT * FROM employee WHERE id = ?";
+        Employee employee = null;
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setInt(1, EmployeeId);
+            try (ResultSet rset = stmt.executeQuery()) {                
+                if(rset.next()) {
+                    employee = new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")));
+                }
+            }catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
+    }
+    @Override
+    public void modifierEmployee(Employee employee, int EmployeeId) {
         String SQL = "UPDATE employee SET nom = ?, prenom = ?, salaire = ?, email = ?, phone = ?, role = ?, poste = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, employee.getNom());
@@ -193,6 +212,13 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(7, employee.getPoste().name());
             stmt.setInt(8, EmployeeId);
             stmt.executeUpdate();
+            EmployeeView view = EmployeeView.getInstance();
+            view.Nom.setText("");
+            view.Prenom.setText("");
+            view.Salaire.setText("");
+            view.Email.setText("");
+            view.Telephone.setText("");
+            EmployeeView.ModifierSuccess();
         } catch (SQLException e) {
             e.printStackTrace();
         }

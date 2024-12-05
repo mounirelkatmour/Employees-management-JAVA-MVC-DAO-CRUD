@@ -8,6 +8,7 @@ import Model.Employee;
 import Model.EmployeeModel;
 import Model.Poste;
 import Model.Role;
+import Utilities.Utils;
 import View.EmployeeView;
 
 public class EmployeeController {
@@ -16,7 +17,7 @@ public class EmployeeController {
     public EmployeeController(EmployeeModel employeeModel, EmployeeView employeeView) {
         this.employeeModel = employeeModel;
         this.employeeView = employeeView;
-        this.employeeView.Ajouter.addActionListener(e -> ajouterEmployee());
+        this.employeeView.Ajouter.addActionListener(e -> this.ajouterEmployee());
         this.employeeView.Afficher.addActionListener(e -> {
             if (employeeView.Nom.getText().isEmpty() && employeeView.Prenom.getText().isEmpty() && employeeView.Salaire.getText().isEmpty() && employeeView.Email.getText().isEmpty() && employeeView.Telephone.getText().isEmpty()) {
                 this.afficherEmployee();
@@ -48,7 +49,8 @@ public class EmployeeController {
                 this.findBySalaire(salaire);
             }
         });
-        this.employeeView.Supprimer.addActionListener(e -> supprimerEmployee());
+        this.employeeView.Supprimer.addActionListener(e -> this.supprimerEmployee());
+        this.employeeView.Modifier.addActionListener(e -> this.updateEmployee());
         this.afficherEmployee();
     }
     public void ajouterEmployee() {
@@ -66,7 +68,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void findByEmail(String email) {
@@ -75,7 +77,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void findByFullName(String firstname, String lastname) {
@@ -85,7 +87,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void findByFirstName(String firstname) {
@@ -94,7 +96,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(),e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void findByLastName(String lastname) {
@@ -103,7 +105,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void findByPhone(String phone) {
@@ -111,7 +113,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void findBySalaire(double salaire) {
@@ -119,7 +121,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.Tableau.getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
         }
     }
     public void supprimerEmployee() {
@@ -127,7 +129,6 @@ public class EmployeeController {
         if (selectedRow != -1) {
             try {
                 int id = Integer.parseInt(employeeView.Tableau.getModel().getValueAt(selectedRow, 0).toString());
-                System.out.println("Selected ID: " + id);
                 employeeModel.supprimerEmployee(id);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid ID format.");
@@ -136,5 +137,30 @@ public class EmployeeController {
             EmployeeView.SupprimerFail("Veuillez choisir un employé.");
         }
         this.afficherEmployee();
+    }
+    public void updateEmployee() {
+        int selectedRow = employeeView.Tableau.getSelectedRow();
+        if (selectedRow != -1) {
+            try {
+                int id = Integer.parseInt(employeeView.Tableau.getModel().getValueAt(selectedRow, 0).toString());
+                String nom = employeeView.Nom.getText();
+                String prenom = employeeView.Prenom.getText();
+                String email = employeeView.Email.getText();
+                double salaire = Utils.parseDouble(employeeView.Salaire.getText());
+                String phone = employeeView.Telephone.getText();
+                Role role = (Role) (employeeView.RoleComboBox.getSelectedItem());
+                Poste poste = (Poste) employeeView.PosteComboBox.getSelectedItem();
+                Employee employeeToUpdate = employeeModel.findById(id);
+                if (employeeToUpdate != null) {
+                    employeeModel.updateEmployee(employeeToUpdate,id, nom, prenom, email, salaire, phone, role, poste);
+                } else {
+                    EmployeeView.ModifierFail("L'employé avec l'ID spécifié n'existe pas.");
+                }
+            } catch (NumberFormatException e) {
+                EmployeeView.ModifierFail("Erreur lors de la mise à jour de l'employé.");
+            }
+        }else{
+            EmployeeView.ModifierFail("Veuillez choisir un employé.");
+        }
     }
 }
