@@ -2,10 +2,13 @@ package View;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import Model.Employee;
 import Model.Poste;
 import Model.Role;
 import java.awt.*;
 public class EmployeeView extends JFrame {
+    private static final EmployeeView INSTANCE = new EmployeeView();
     private JPanel General = new JPanel();
     private JPanel GeneralUp = new JPanel();
     private JPanel GeneralDown = new JPanel();
@@ -32,7 +35,7 @@ public class EmployeeView extends JFrame {
     public JLabel PosteLabel;
     public JComboBox<Poste> PosteComboBox;
 
-    public EmployeeView() {
+    private EmployeeView() {
         setTitle("Gestion des employés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(530, 320);
@@ -84,5 +87,15 @@ public class EmployeeView extends JFrame {
         ButtonsContainer.add(Supprimer);
         ButtonsContainer.add(Afficher);
         setVisible(true);
+    }
+    public static void AjouterSuccess(Employee employee){
+        JOptionPane.showMessageDialog(null, "L'employé " + employee.getNom() + " " + employee.getPrenom() + " a été ajouté avec succès");
+    }
+    public static void AjouterFail(String message){
+        JOptionPane.showMessageDialog(null, "L'employé n'a pas été ajouté. " + message);
+    }
+
+    public static EmployeeView getInstance() {
+        return INSTANCE;
     }
 }

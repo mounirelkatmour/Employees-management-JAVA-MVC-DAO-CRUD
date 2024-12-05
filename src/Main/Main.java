@@ -9,7 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
         EmployeeModel model = new EmployeeModel(new EmployeeDAOImpl());
-        EmployeeView view = new EmployeeView();
-        new EmployeeController(model, view);
+        new EmployeeController(model, EmployeeView.getInstance());
     }
 }

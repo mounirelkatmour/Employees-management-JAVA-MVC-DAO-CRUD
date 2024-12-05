@@ -18,31 +18,30 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
     }
     @Override
     public void ajouterEmployee(Employee employee) {
-        String SQL = "INSERT INTO employee (id, nom, prenom, salaire, email, phone, role, poste) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
-            stmt.setInt(1, Employee.getId());
-            stmt.setString(2, employee.getNom());
-            stmt.setString(3, employee.getPrenom());
-            stmt.setDouble(4, employee.getSalaire());
-            stmt.setString(5, employee.getEmail());
-            stmt.setString(6, employee.getPhone());            
-            stmt.setString(7, employee.getRole().name());
-            stmt.setString(8, employee.getPoste().name());
+            stmt.setString(1, employee.getNom());
+            stmt.setString(2, employee.getPrenom());
+            stmt.setDouble(3, employee.getSalaire());
+            stmt.setString(4, employee.getEmail());
+            stmt.setString(5, employee.getPhone());            
+            stmt.setString(6, employee.getRole().name());
+            stmt.setString(7, employee.getPoste().name());
             stmt.executeUpdate();
-            EmployeeView employeeView = new EmployeeView();
-            employeeView.Nom.setText("");
-            employeeView.Prenom.setText("");
-            employeeView.Email.setText("");
-            employeeView.Telephone.setText("");
-            employeeView.Salaire.setText("");
-
+            EmployeeView view = EmployeeView.getInstance();
+            view.Nom.setText("");
+            view.Prenom.setText("");
+            view.Salaire.setText("");
+            view.Email.setText("");
+            view.Telephone.setText("");
+            EmployeeView.AjouterSuccess(employee);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     @Override
     public Employee findByEmail(int EmployeeId) {
-        String SQL = "SELECT * FROM employee WHERE id = ?";
+        String SQL = "SELECT * FROM employee WHERE email = ?";
         Employee employee = null;
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, EmployeeId);

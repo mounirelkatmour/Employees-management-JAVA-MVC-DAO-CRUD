@@ -1,7 +1,8 @@
 package Model;
 
 public class Employee {
-    private static int id = 1;
+    
+    private int id;
     private String nom;
     private String prenom;
     private double salaire;
@@ -9,8 +10,9 @@ public class Employee {
     private String phone;
     private Role role;
     private Poste poste;
+
     public Employee(int id, String nom, String prenom, double salaire, String email, String phone, Role role, Poste poste) {
-        Employee.id = id;
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.salaire = salaire;
@@ -20,12 +22,12 @@ public class Employee {
         this.poste = poste;
     }
     
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
-    public static void setId(int id) {
-        Employee.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
