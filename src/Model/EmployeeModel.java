@@ -67,7 +67,13 @@ public class EmployeeModel {
     public void updateEmployee(Employee employee,int id,String nom,String prenom,String email,double salaire,String phone,Role role,Poste poste) {
         if(!nom.isEmpty()) employee.setNom(nom);
         if(!prenom.isEmpty()) employee.setPrenom(prenom);
-        if(!email.isEmpty()) employee.setEmail(email);
+        if(!email.isEmpty()){
+            if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                EmployeeView.ModifierFail("Veuillez entrer une adresse email valide.");
+                return;
+            }
+            employee.setEmail(email);
+        }
         if(salaire != 0) {
             if(salaire < 0 ){
                 EmployeeView.ModifierFail("Le salaire doit être un nombre positif");
@@ -75,7 +81,13 @@ public class EmployeeModel {
             }
             employee.setSalaire(salaire);
         };
-        if(!phone.isEmpty()) employee.setPhone(phone);
+        if(!phone.isEmpty()){
+            if(!phone.matches("^0\\d{9}$")) {
+                EmployeeView.ModifierFail("Le numéro de téléphone doit contenir 10 chiffres");
+                return;
+            }
+            employee.setPhone(phone);
+        } 
         if(role != null) employee.setRole(role);
         if(poste != null) employee.setPoste(poste);
         dao.modifierEmployee(employee,id);
