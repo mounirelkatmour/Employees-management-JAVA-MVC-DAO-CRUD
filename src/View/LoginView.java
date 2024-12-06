@@ -10,7 +10,7 @@ public class LoginView extends JFrame{
     private JLabel UsernameLabel = new JLabel("Username");
     private JTextField Username = new JTextField();
     private JLabel PasswordLabel = new JLabel("Password");
-    private JTextField Password = new JTextField();
+    private JTextField Password = new JPasswordField();
     private JPanel ButtonsContainer = new JPanel();
     private JButton Login = new JButton("Login");
 
