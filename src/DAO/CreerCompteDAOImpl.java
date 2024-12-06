@@ -11,7 +11,7 @@ public class CreerCompteDAOImpl implements CreerCompteDAOI {
         connection = DBConnection.getConnection();
     }
     @Override
-    public void creerCompte(int id, CreerCompte newAccount) {
+    public boolean creerCompte(int id, CreerCompte newAccount) {
         String SQL = "INSERT INTO login (username, password,id) VALUES (?, ?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, newAccount.getUsername());
@@ -22,15 +22,16 @@ public class CreerCompteDAOImpl implements CreerCompteDAOI {
         } catch (SQLException e) {
             if(e.getMessage().contains("Duplicate entry")&&e.getMessage().contains("id")){
                 CreerCompteView.CreerCompteFail("Cet employé a deja un compte.");
-                return;
+                return false;
             }else{
                 if(e.getMessage().contains("Duplicate entry")&&e.getMessage().contains("username")){
                     CreerCompteView.CreerCompteFail("Ce username est deja pris.");
-                    return;
+                    return false;
                 }else{
                     e.printStackTrace();
                 }
             }
         }
+        return true;
     }
 }

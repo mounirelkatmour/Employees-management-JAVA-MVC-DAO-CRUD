@@ -8,40 +8,40 @@ import Model.Poste;
 import Model.Role;
 import java.awt.*;
 public class EmployeeView extends JFrame {
-    private static final EmployeeView INSTANCE = new EmployeeView();
-    private JPanel General = new JPanel();
-    private JPanel GeneralUp = new JPanel();
-    private JPanel GeneralDown = new JPanel();
-    private JPanel ListContainer = new JPanel();
-    private JPanel ButtonsContainer = new JPanel();
-    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire", "Phone", "Role", "Poste"}, 0){
+    protected static final EmployeeView INSTANCE = new EmployeeView();
+    protected JPanel General = new JPanel();
+    protected JPanel GeneralUp = new JPanel();
+    protected JPanel GeneralDown = new JPanel();
+    protected JPanel ListContainer = new JPanel();
+    protected JPanel ButtonsContainer = new JPanel();
+    protected DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire", "Phone", "Role", "Poste"}, 0){
         @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
     };
-    private JTable Tableau = new JTable(tableModel);
-    private JButton Ajouter = new JButton("Ajouter");
-    private JButton Modifier = new JButton("Modifier");
-    private JButton Supprimer = new JButton("Supprimer");
-    private JButton Afficher = new JButton("Afficher");
-    private JButton CreerCompte = new JButton("Créer un compte");
-    private JLabel NomLabel;
-    private JTextField Nom;
-    private JLabel PrenomLabel;
-    private JTextField Prenom;
-    private JLabel EmailLabel;
-    private JTextField Email;
-    private JLabel TelephoneLabel;
-    private JTextField Telephone;
-    private JLabel SalaireLabel;
-    private JTextField Salaire;
-    private JLabel RoleLabel;
-    private JComboBox<Role> RoleComboBox;
-    private JLabel PosteLabel;
-    private JComboBox<Poste> PosteComboBox;
+    protected JTable Tableau = new JTable(tableModel);
+    protected JButton Ajouter = new JButton("Ajouter");
+    protected JButton Modifier = new JButton("Modifier");
+    protected JButton Supprimer = new JButton("Supprimer");
+    protected JButton Afficher = new JButton("Afficher");
+    protected JButton CreerCompte = new JButton("Créer un compte");
+    protected JLabel NomLabel;
+    protected JTextField Nom;
+    protected JLabel PrenomLabel;
+    protected JTextField Prenom;
+    protected JLabel EmailLabel;
+    protected JTextField Email;
+    protected JLabel TelephoneLabel;
+    protected JTextField Telephone;
+    protected JLabel SalaireLabel;
+    protected JTextField Salaire;
+    protected JLabel RoleLabel;
+    protected JComboBox<Role> RoleComboBox;
+    protected JLabel PosteLabel;
+    protected JComboBox<Poste> PosteComboBox;
 
-    private EmployeeView() {
+    protected EmployeeView() {
         setTitle("Gestion des employés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(930, 520);
@@ -87,9 +87,6 @@ public class EmployeeView extends JFrame {
         Tableau.setPreferredScrollableViewportSize(preferredSize);
         Tableau.setFillsViewportHeight(true);
         ListContainer.add(new JScrollPane(Tableau));
-        this.CacherColumn(5);
-        this.CacherColumn(6);
-        this.CacherColumn(7);
         GeneralDown.add(ButtonsContainer, BorderLayout.SOUTH);
         ButtonsContainer.setLayout(new FlowLayout());
         ButtonsContainer.add(Ajouter);
@@ -120,7 +117,7 @@ public class EmployeeView extends JFrame {
     public static void ModifierFail(String message){
         JOptionPane.showMessageDialog(null, message);
     }
-    private void CacherColumn(int index){
+    protected void CacherColumn(int index){
         Tableau.getColumnModel().getColumn(index).setMinWidth(0);
         Tableau.getColumnModel().getColumn(index).setMaxWidth(0);
         Tableau.getColumnModel().getColumn(index).setWidth(0);

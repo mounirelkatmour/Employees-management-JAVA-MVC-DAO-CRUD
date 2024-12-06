@@ -56,7 +56,7 @@ public class EmployeeController {
         });
         EmployeeController.employeeView.getSupprimerButton().addActionListener(e -> this.supprimerEmployee());
         EmployeeController.employeeView.getModifierButton().addActionListener(e -> this.updateEmployee());
-        EmployeeController.employeeView.getCreerCompteButton().addActionListener(e -> {EmployeeController.getId();this.newCreerCompteInstance();});
+        EmployeeController.employeeView.getCreerCompteButton().addActionListener(e -> new CreerCompteController());
         this.afficherEmployee();
     }
     public void ajouterEmployee() {
@@ -180,14 +180,5 @@ public class EmployeeController {
             }
         }
         return id;
-    }
-    public void newCreerCompteInstance(){
-        if(getId()!=-1){
-            CreerCompteModel cmodel = new CreerCompteModel(new CreerCompteDAOImpl());
-            CreerCompteView cview = new CreerCompteView();
-            new CreerCompteController(cmodel,cview);
-        }else{
-            EmployeeView.ModifierFail("Veuillez choisir un employé.");
-        }
     }
 }

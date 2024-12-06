@@ -54,4 +54,10 @@ public class LoginView extends JFrame{
     public JButton getLoginButton() {
         return Login;
     }
+    public static void LoginFail(String message) {
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public static void LoginSuccess(String message) {
+        JOptionPane.showMessageDialog(null, "Welcome Back "+ message +" !", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
 }

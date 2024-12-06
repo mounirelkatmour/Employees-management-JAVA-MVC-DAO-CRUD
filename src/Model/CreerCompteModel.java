@@ -8,11 +8,14 @@ public class CreerCompteModel {
     public CreerCompteModel(CreerCompteDAOImpl dao) {
         this.dao = dao;
     }
-    public void creerCompte(int id, CreerCompte newAccount){
+    public boolean creerCompte(int id, CreerCompte newAccount){
         if (newAccount.getUsername().trim().isEmpty() || newAccount.getPassword().trim().isEmpty()) {
             CreerCompteView.CreerCompteFail("Veuillez remplir tous les champs.");
-            return;
+            return false;
+        }else if (newAccount.getPassword().length() < 8) {
+            CreerCompteView.CreerCompteFail("Le mot de passe doit contenir au moins 8 caractères.");
+            return false;
         }
-        dao.creerCompte(id, newAccount);
+        return dao.creerCompte(id, newAccount);
     }
 }

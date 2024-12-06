@@ -1,16 +1,15 @@
 package Main;
 
-import Controller.EmployeeController;
-import DAO.EmployeeDAOImpl;
-import Model.EmployeeModel;
-import View.EmployeeView;
+import Controller.LoginController;
+import DAO.LoginDAOImpl;
+import Model.LoginModel;
+import View.LoginView;
 
 public class Main {
 
     public static void main(String[] args) {
-        EmployeeModel model = new EmployeeModel(new EmployeeDAOImpl());
-        EmployeeView view = EmployeeView.getInstance();
-        new EmployeeController(model, view);
-        // LoginView view = LoginView.getInstance();
+        LoginModel model = new LoginModel(new LoginDAOImpl());
+        LoginView view = LoginView.getInstance();
+        new LoginController(model,view);
     }
 }
