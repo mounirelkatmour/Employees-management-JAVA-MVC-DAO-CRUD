@@ -29,11 +29,11 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(7, employee.getPoste().name());
             stmt.executeUpdate();
             EmployeeView view = EmployeeView.getInstance();
-            view.Nom.setText("");
-            view.Prenom.setText("");
-            view.Salaire.setText("");
-            view.Email.setText("");
-            view.Telephone.setText("");
+            view.getNomField().setText("");
+            view.getPrenomField().setText("");
+            view.getSalaireField().setText("");
+            view.getEmailField().setText("");
+            view.getPhoneField().setText("");
             EmployeeView.AjouterSuccess(employee);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -212,11 +212,11 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setInt(8, EmployeeId);
             stmt.executeUpdate();
             EmployeeView view = EmployeeView.getInstance();
-            view.Nom.setText("");
-            view.Prenom.setText("");
-            view.Salaire.setText("");
-            view.Email.setText("");
-            view.Telephone.setText("");
+            view.getNomField().setText("");
+            view.getPrenomField().setText("");
+            view.getSalaireField().setText("");
+            view.getEmailField().setText("");
+            view.getPhoneField().setText("");
             EmployeeView.ModifierSuccess();
         } catch (SQLException e) {
             e.printStackTrace();

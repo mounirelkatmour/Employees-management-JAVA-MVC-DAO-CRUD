@@ -4,7 +4,6 @@ import Controller.EmployeeController;
 import DAO.EmployeeDAOImpl;
 import Model.EmployeeModel;
 import View.EmployeeView;
-import View.LoginView;
 
 public class Main {
 

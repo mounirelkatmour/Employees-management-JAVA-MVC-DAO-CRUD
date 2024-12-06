@@ -20,26 +20,26 @@ public class EmployeeView extends JFrame {
                 return false;
             }
     };
-    public JTable Tableau = new JTable(tableModel);
-    public JButton Ajouter = new JButton("Ajouter");
-    public JButton Modifier = new JButton("Modifier");
-    public JButton Supprimer = new JButton("Supprimer");
-    public JButton Afficher = new JButton("Afficher");
-    public JButton CreerCompte = new JButton("Créer un compte");
-    public JLabel NomLabel;
-    public JTextField Nom;
-    public JLabel PrenomLabel;
-    public JTextField Prenom;
-    public JLabel EmailLabel;
-    public JTextField Email;
-    public JLabel TelephoneLabel;
-    public JTextField Telephone;
-    public JLabel SalaireLabel;
-    public JTextField Salaire;
-    public JLabel RoleLabel;
-    public JComboBox<Role> RoleComboBox;
-    public JLabel PosteLabel;
-    public JComboBox<Poste> PosteComboBox;
+    private JTable Tableau = new JTable(tableModel);
+    private JButton Ajouter = new JButton("Ajouter");
+    private JButton Modifier = new JButton("Modifier");
+    private JButton Supprimer = new JButton("Supprimer");
+    private JButton Afficher = new JButton("Afficher");
+    private JButton CreerCompte = new JButton("Créer un compte");
+    private JLabel NomLabel;
+    private JTextField Nom;
+    private JLabel PrenomLabel;
+    private JTextField Prenom;
+    private JLabel EmailLabel;
+    private JTextField Email;
+    private JLabel TelephoneLabel;
+    private JTextField Telephone;
+    private JLabel SalaireLabel;
+    private JTextField Salaire;
+    private JLabel RoleLabel;
+    private JComboBox<Role> RoleComboBox;
+    private JLabel PosteLabel;
+    private JComboBox<Poste> PosteComboBox;
 
     private EmployeeView() {
         setTitle("Gestion des employés");
@@ -129,7 +129,83 @@ public class EmployeeView extends JFrame {
         int choice = JOptionPane.showOptionDialog(null, "Êtes-vous sûr de supprimer cet employé?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Oui", "Non"}, "Non");
         return choice == JOptionPane.YES_OPTION;
     }
+    public JTable getTable() {
+        return Tableau;
+    }
+    public JButton getAjouterButton() {
+        return Ajouter;
+    }
 
+    public JButton getModifierButton() {
+        return Modifier;
+    }
+
+    public JButton getSupprimerButton() {
+        return Supprimer;
+    }
+
+    public JButton getAfficherButton() {
+        return Afficher;
+    }
+
+    public JButton getCreerCompteButton() {
+        return CreerCompte;
+    }
+    public JTextField getNomField() {
+        return Nom;
+    }
+
+    public void setNomField(JTextField nomField) {
+        Nom = nomField;
+    }
+
+    public JTextField getPrenomField() {
+        return Prenom;
+    }
+
+    public void setPrenomField(JTextField prenomField) {
+        Prenom = prenomField;
+    }
+
+    public JTextField getSalaireField() {
+        return Salaire;
+    }
+
+    public void setSalaireField(JTextField salaireField) {
+        Salaire = salaireField;
+    }
+
+    public JTextField getEmailField() {
+        return Email;
+    }
+
+    public void setEmailField(JTextField emailField) {
+        Email = emailField;
+    }
+
+    public JTextField getPhoneField() {
+        return Telephone;
+    }
+
+    public void setPhoneField(JTextField phoneField) {
+        Telephone = phoneField;
+    }
+
+    public JComboBox<Role> getRoleComboBox() {
+        return RoleComboBox;
+    }
+
+    public void setRoleComboBox(JComboBox<Role> roleComboBox) {
+        RoleComboBox = roleComboBox;
+    }
+
+    public JComboBox<Poste> getPosteComboBox() {
+        return PosteComboBox;
+    }
+
+    public void setPosteComboBox(JComboBox<Poste> posteComboBox) {
+        PosteComboBox = posteComboBox;
+    }
     public static EmployeeView getInstance() {
         return INSTANCE;
     }

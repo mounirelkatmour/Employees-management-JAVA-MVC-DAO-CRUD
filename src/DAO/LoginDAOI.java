@@ -1,5 +1,6 @@
 package DAO;
 
-public class LoginDAOI {
+public interface LoginDAOI {
+
     
 }

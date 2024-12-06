@@ -2,8 +2,6 @@ package DAO;
 
 import java.util.List;
 import Model.Employee;
-import Model.Poste;
-import Model.Role;
 
 public interface EmployeeDAOI {
     public void ajouterEmployee(Employee employee);

@@ -1,5 +1,5 @@
 package DAO;
 
-public class LoginDAOImpl {
+public class LoginDAOImpl implements LoginDAOI {
     
 }

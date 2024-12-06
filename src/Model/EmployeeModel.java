@@ -14,7 +14,7 @@ public class EmployeeModel {
 
     public void ajouterEmployee(String nom, String prenom, String salaire, String email, String phone, Role role, Poste poste) {
         double salaireDouble = Utils.parseDouble(salaire);
-        if(nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || phone.isEmpty() || salaireDouble == 0) {
+        if(nom.trim().isEmpty() || prenom.trim().isEmpty() || email.trim().isEmpty() || phone.trim().isEmpty() || salaireDouble == 0) {
             EmployeeView.AjouterFail("Veuillez remplir tous les champs.");
             return;
         }
@@ -94,5 +94,8 @@ public class EmployeeModel {
         if(role != null) employee.setRole(role);
         if(poste != null) employee.setPoste(poste);
         dao.modifierEmployee(employee,id);
+    }
+    public void creerCompte(int id) {
+        // dao.creerCompte(id);
     }
 }

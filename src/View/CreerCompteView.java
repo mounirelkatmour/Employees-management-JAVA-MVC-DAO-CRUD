@@ -1,26 +1,24 @@
 package View;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
-public class LoginView extends JFrame{
-    private static final LoginView INSTANCE = new LoginView();
+public class CreerCompteView extends JFrame{
+
     private JPanel General = new JPanel();
     private JPanel InputsContainer = new JPanel();
     private JLabel UsernameLabel = new JLabel("Username");
     private JTextField Username = new JTextField();
     private JLabel PasswordLabel = new JLabel("Password");
-    private JTextField Password = new JTextField();
+    private JTextField Password = new JPasswordField();
     private JPanel ButtonsContainer = new JPanel();
-    private JButton Login = new JButton("Login");
-
+    private JButton CreateAccount = new JButton("Créer un compte");
     
-    public LoginView() {
-        setTitle("Login");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    public CreerCompteView() {
+        setTitle("Créer un compte");
         setSize(400, 300);
         setLocationRelativeTo(null);
-        setVisible(true);
         add(General);
         General.setLayout(new BorderLayout());
         General.add(InputsContainer, BorderLayout.CENTER);
@@ -33,25 +31,31 @@ public class LoginView extends JFrame{
         InputsContainer.add(PasswordLabel,2);
         InputsContainer.add(Password,3);
         ButtonsContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
-        ButtonsContainer.add(Login);
-
+        ButtonsContainer.add(CreateAccount);
+        setVisible(true);
     }
     public String getUsername() {
         return Username.getText();
     }
-    public String getPassword() {
-        return Password.getText();
-    }
+    
     public void setUsername(String username) {
         Username.setText(username);
     }
+
+    public String getPassword() {
+        return Password.getText();
+    }
+
     public void setPassword(String password) {
         Password.setText(password);
     }
-    public static LoginView getInstance() {
-        return INSTANCE;
+    public static void CreerCompteSuccess() {
+        JOptionPane.showMessageDialog(null, "Le compte a bien été créé.", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
-    public JButton getLoginButton() {
-        return Login;
+    public static void CreerCompteFail(String message) {
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public JButton getCreateAccountButton() {
+        return CreateAccount;
     }
 }
