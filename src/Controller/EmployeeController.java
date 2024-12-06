@@ -181,4 +181,14 @@ public class EmployeeController {
         }
         return id;
     }
+    public static void viderLesChamps(){
+        EmployeeView view = EmployeeView.getInstance();
+        view.getNomField().setText("");
+        view.getPrenomField().setText("");
+        view.getSalaireField().setText("");
+        view.getEmailField().setText("");
+        view.getPhoneField().setText("");
+        view.getRoleComboBox().setSelectedIndex(-1);
+        view.getPosteComboBox().setSelectedIndex(-1);
+    }
 }

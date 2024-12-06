@@ -68,9 +68,13 @@ public class EmployeeModel {
         return dao.findById(id);
     }
     public void updateEmployee(Employee employee,int id,String nom,String prenom,String email,double salaire,String phone,Role role,Poste poste) {
-        if(!nom.isEmpty()) employee.setNom(nom);
-        if(!prenom.isEmpty()) employee.setPrenom(prenom);
-        if(!email.isEmpty()){
+        if(nom.trim().isEmpty() && prenom.trim().isEmpty() && email.trim().isEmpty() && phone.trim().isEmpty() && salaire == 0 && role == null && poste == null) {
+            EmployeeView.ModifierFail("Veuillez remplir au moins un champ.");
+            return;
+        }            
+        if(!nom.trim().isEmpty()) employee.setNom(nom);
+        if(!prenom.trim().isEmpty()) employee.setPrenom(prenom);
+        if(!email.trim().isEmpty()){
             if(!email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
                 EmployeeView.ModifierFail("Veuillez entrer une adresse email valide.");
                 return;
@@ -94,8 +98,5 @@ public class EmployeeModel {
         if(role != null) employee.setRole(role);
         if(poste != null) employee.setPoste(poste);
         dao.modifierEmployee(employee,id);
-    }
-    public void creerCompte(int id) {
-        // dao.creerCompte(id);
     }
 }

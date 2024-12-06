@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.*;
 
+import Controller.EmployeeController;
 import Model.CreerCompte;
 import View.CreerCompteView;
 
@@ -12,6 +13,7 @@ public class CreerCompteDAOImpl implements CreerCompteDAOI {
     }
     @Override
     public boolean creerCompte(int id, CreerCompte newAccount) {
+        EmployeeController.viderLesChamps();
         String SQL = "INSERT INTO login (username, password,id) VALUES (?, ?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, newAccount.getUsername());
