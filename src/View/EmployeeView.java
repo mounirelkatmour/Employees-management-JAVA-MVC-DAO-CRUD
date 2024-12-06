@@ -25,6 +25,7 @@ public class EmployeeView extends JFrame {
     public JButton Modifier = new JButton("Modifier");
     public JButton Supprimer = new JButton("Supprimer");
     public JButton Afficher = new JButton("Afficher");
+    public JButton CreerCompte = new JButton("Créer un compte");
     public JLabel NomLabel;
     public JTextField Nom;
     public JLabel PrenomLabel;
@@ -95,6 +96,7 @@ public class EmployeeView extends JFrame {
         ButtonsContainer.add(Modifier);
         ButtonsContainer.add(Supprimer);
         ButtonsContainer.add(Afficher);
+        ButtonsContainer.add(CreerCompte);
         setVisible(true);
     }
     public static void AjouterSuccess(Employee employee){

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-import Controller.EmployeeController;
 import Model.Employee;
 import Model.Poste;
 import Model.Role;
@@ -233,33 +232,5 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-    @Override
-    public List<Role> findAllRoles() {
-        String SQL = "SELECT DISTINCT role FROM employee";
-        List<Role> roles = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(SQL);
-                ResultSet rset = stmt.executeQuery()) {
-            while (rset.next()) {
-                roles.add(Role.valueOf(rset.getString("role")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return roles;
-    }
-    @Override
-    public List<Poste> findAllPosts() {
-        String SQL = "SELECT DISTINCT poste FROM employee";
-        List<Poste> posts = new ArrayList<>();
-        try (PreparedStatement stmt = connection.prepareStatement(SQL);
-                ResultSet rset = stmt.executeQuery()) {
-            while (rset.next()) {
-                posts.add(Poste.valueOf(rset.getString("poste")));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return posts;
     }
 }

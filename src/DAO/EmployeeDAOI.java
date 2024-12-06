@@ -10,13 +10,11 @@ public interface EmployeeDAOI {
     public List<Employee> afficherEmployee();
     public void modifierEmployee(Employee employee,int EmployeeId);
     public void supprimerEmployee(int EmployeeId);
+    public List<Employee> findByFullName(String firstname,String lastname);
     public List<Employee> findByEmail(String email);
     public List<Employee> findByFirstName(String firstname);
     public List<Employee> findByLastName(String lastname);
-    public List<Employee> findByFullName(String firstname,String lastname);
     public List<Employee> findByPhone(String phone);
     public List<Employee> findBySalaire(double salaire);
     public Employee findById(int EmployeeId);
-    public List<Role> findAllRoles();
-    public List<Poste> findAllPosts();
 }
