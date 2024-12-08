@@ -18,24 +18,6 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         connection = DBConnection.getConnection();
     }
     @Override
-    public void ajouterEmployee(Employee employee) {
-        String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        EmployeeController.viderLesChamps();
-        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
-            stmt.setString(1, employee.getNom());
-            stmt.setString(2, employee.getPrenom());
-            stmt.setDouble(3, employee.getSalaire());
-            stmt.setString(4, employee.getEmail());
-            stmt.setString(5, employee.getPhone());            
-            stmt.setString(6, employee.getRole().name());
-            stmt.setString(7, employee.getPoste().name());
-            stmt.executeUpdate();
-            EmployeeView.AjouterSuccess(employee);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    @Override
     public List<Employee> afficherEmployee() {
         String SQL = "SELECT * FROM employee";
         EmployeeController.viderLesChamps();
@@ -61,6 +43,24 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             EmployeeView.AfficherFail("Aucun employé a été trouvé.");
         }
         return employees;
+    }
+    @Override
+    public void ajouterEmployee(Employee employee) {
+        String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        EmployeeController.viderLesChamps();
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, employee.getNom());
+            stmt.setString(2, employee.getPrenom());
+            stmt.setDouble(3, employee.getSalaire());
+            stmt.setString(4, employee.getEmail());
+            stmt.setString(5, employee.getPhone());            
+            stmt.setString(6, employee.getRole().name());
+            stmt.setString(7, employee.getPoste().name());
+            stmt.executeUpdate();
+            EmployeeView.AjouterSuccess(employee);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public List<Employee> findByEmail(String email) {

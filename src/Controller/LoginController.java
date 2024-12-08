@@ -33,9 +33,7 @@ public class LoginController {
                 EmployeeView view = LimitedView.getLimitedInstance();
                 new EmployeeController(model, view);
             }
-
         }
-
     }
 }
 

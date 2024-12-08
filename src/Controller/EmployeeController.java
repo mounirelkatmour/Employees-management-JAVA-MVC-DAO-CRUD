@@ -8,15 +8,17 @@ import DAO.CreerCompteDAOImpl;
 import Model.CreerCompteModel;
 import Model.Employee;
 import Model.EmployeeModel;
+import Model.LoginModel;
 import Model.Poste;
 import Model.Role;
 import Utilities.Utils;
 import View.CreerCompteView;
 import View.EmployeeView;
+import View.LimitedView;
 
 public class EmployeeController {
-    private EmployeeModel employeeModel;
-    private static EmployeeView employeeView;
+    protected EmployeeModel employeeModel;
+    protected static EmployeeView employeeView;
     public EmployeeController(EmployeeModel employeeModel, EmployeeView employeeView) {
         this.employeeModel = employeeModel;
         EmployeeController.employeeView = employeeView;
@@ -182,13 +184,27 @@ public class EmployeeController {
         return id;
     }
     public static void viderLesChamps(){
-        EmployeeView view = EmployeeView.getInstance();
-        view.getNomField().setText("");
-        view.getPrenomField().setText("");
-        view.getSalaireField().setText("");
-        view.getEmailField().setText("");
-        view.getPhoneField().setText("");
-        view.getRoleComboBox().setSelectedIndex(-1);
-        view.getPosteComboBox().setSelectedIndex(-1);
+        if(LoginModel.getIsAdmin() == true){
+            EmployeeView employeeView = EmployeeView.getInstance();
+            employeeView.getNomField().setText("");
+            employeeView.getPrenomField().setText("");
+            employeeView.getSalaireField().setText("");
+            employeeView.getEmailField().setText("");
+            employeeView.getPhoneField().setText("");
+            employeeView.getRoleComboBox().setSelectedIndex(-1);
+            employeeView.getPosteComboBox().setSelectedIndex(-1);
+            return;
+        }
+        if(LoginModel.getIsAdmin() == false){
+            EmployeeView limitedView = LimitedView.getLimitedInstance();
+            limitedView.getNomField().setText("");
+            limitedView.getPrenomField().setText("");
+            limitedView.getSalaireField().setText("");
+            limitedView.getEmailField().setText("");
+            limitedView.getPhoneField().setText("");
+            limitedView.getRoleComboBox().setSelectedIndex(-1);
+            limitedView.getPosteComboBox().setSelectedIndex(-1);
+            return;
+        }
     }
 }
