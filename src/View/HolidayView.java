@@ -4,15 +4,17 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import Model.Employee;
 import Model.HolidayType;
+import Model.Role;
+
 import java.awt.*;
 
 public class HolidayView extends JFrame {
     private static final HolidayView INSTANCE = new HolidayView();
     private JPanel generalPanel = new JPanel();
     private JLabel nomEmployeLabel = new JLabel("Nom de l'employé");
-    private JComboBox<Employee> nomEmployeComboBox = new JComboBox<>();
+    private JComboBox<String> nomEmployeComboBox = new JComboBox<>();
     private JLabel typeLabel = new JLabel("Type");
-    private JComboBox<HolidayType> typeComboBox = new JComboBox<>();
+    private JComboBox<HolidayType> typeComboBox = new JComboBox<>(HolidayType.values());
     private JLabel dateDebutLabel = new JLabel("Date de début");
     private JTextField dateDebut = new JTextField(10);
     private JLabel dateFinLabel = new JLabel("Date de fin");
@@ -37,9 +39,11 @@ public class HolidayView extends JFrame {
         setSize(930, 520);
         setLocationRelativeTo(null);
         setVisible(true);
+        
         generalPanel.setLayout(new BorderLayout());
         inputPanel.setLayout(new GridLayout(5, 2, 10, 10));
         inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
+        
         inputPanel.add(nomEmployeLabel);
         inputPanel.add(nomEmployeComboBox);
         inputPanel.add(typeLabel);
@@ -49,20 +53,48 @@ public class HolidayView extends JFrame {
         inputPanel.add(dateFinLabel);
         inputPanel.add(dateFin);
         generalPanel.add(inputPanel, BorderLayout.NORTH);
+    
         tableScrollPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
         generalPanel.add(tableScrollPane, BorderLayout.CENTER);
+    
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
         buttonPanel.add(ajouterButton);
         buttonPanel.add(modifierButton);
         buttonPanel.add(supprimerButton);
         generalPanel.add(buttonPanel, BorderLayout.SOUTH);
+        
         add(generalPanel);
+        
         holidayTable.setFillsViewportHeight(true);
         holidayTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+    public JComboBox<String> getNomEmployeComboBox() {
+        return nomEmployeComboBox;
+    }
+    public JComboBox<HolidayType> getTypeComboBox() {
+        return typeComboBox;
+    }
+    public String getDateDebut() {
+        return dateDebut.getText();
+    }
+    public String getDateFin() {
+        return dateFin.getText();
+    }
+    public JButton getAjouterButton() {
+        return ajouterButton;
+    }
 
+    public JButton getModifierButton() {
+        return modifierButton;
+    }
+
+    public JButton getSupprimerButton() {
+        return supprimerButton;
+    }
+    public JTable getHolidayTable() {
+        return holidayTable;
+    }
     public static HolidayView getInstance() {
         return INSTANCE;
     }
-
 }

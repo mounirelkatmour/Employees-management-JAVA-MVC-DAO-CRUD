@@ -12,13 +12,13 @@ import Model.Poste;
 import Model.Role;
 import View.EmployeeView;
 
-public class EmployeeDAOImpl implements EmployeeDAOI {
+public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
     private Connection connection;
     public EmployeeDAOImpl() {
         connection = DBConnection.getConnection();
     }
     @Override
-    public List<Employee> afficherEmployee() {
+    public List<Employee> afficher() {
         String SQL = "SELECT * FROM employee";
         EmployeeController.viderLesChamps();
         List<Employee> employees = new ArrayList<>();
@@ -33,7 +33,8 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
                     String phone = rset.getString("phone");
                     String role = rset.getString("role");
                     String poste = rset.getString("poste");
-                    employees.add(new Employee(id, nom, prenom, salaire, email, phone, Role.valueOf(role), Poste.valueOf(poste)));
+                    int holidayBalance = rset.getInt("holidayBalance");
+                    employees.add(new Employee(id, nom, prenom, salaire, email, phone, Role.valueOf(role), Poste.valueOf(poste), holidayBalance));
                 }
             }
         } catch (SQLException e) {
@@ -45,7 +46,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         return employees;
     }
     @Override
-    public void ajouterEmployee(Employee employee) {
+    public void ajouter(Employee employee) {
         String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste) VALUES (?, ?, ?, ?, ?, ?, ?)";
         EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
@@ -71,7 +72,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(1, email);
             try (ResultSet rset = stmt.executeQuery()) {
                 while(rset.next()) {
-                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance")));
                 }
             }
         } catch (SQLException e) {
@@ -92,7 +93,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(2, firstname);
             try (ResultSet rset = stmt.executeQuery()) {
                 while(rset.next()) {
-                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance")));
                 }
             }
         } catch (SQLException e) {
@@ -112,7 +113,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(1, firstname);
             try (ResultSet rset = stmt.executeQuery()) {
                 while(rset.next()) {
-                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance")));
                 }
             }
         } catch (SQLException e) {
@@ -132,7 +133,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(1, lastname);
             try (ResultSet rset = stmt.executeQuery()) {
                 while(rset.next()) {
-                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance")));
                 }
             }
         } catch (SQLException e) {
@@ -152,7 +153,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setString(1, phone);
             try (ResultSet rset = stmt.executeQuery()) {
                 while(rset.next()) {
-                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance")));
                 }
             }
         } catch (SQLException e) {
@@ -172,7 +173,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setDouble(1, salaire);
             try (ResultSet rset = stmt.executeQuery()) {
                 while(rset.next()) {
-                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste"))));
+                    employees.add(new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance")));
                 }
             }
         } catch (SQLException e) {
@@ -192,7 +193,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
             stmt.setInt(1, EmployeeId);
             try (ResultSet rset = stmt.executeQuery()) {                
                 if(rset.next()) {
-                    employee = new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")));
+                    employee = new Employee(rset.getInt("id"), rset.getString("nom"), rset.getString("prenom"), rset.getDouble("salaire"), rset.getString("email"), rset.getString("phone"), Role.valueOf(rset.getString("role")), Poste.valueOf(rset.getString("poste")), rset.getInt("holidayBalance"));
                 }
             }catch(SQLException e) {
                 e.printStackTrace();
@@ -203,7 +204,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         return employee;
     }
     @Override
-    public void modifierEmployee(Employee employee, int EmployeeId) {
+    public void modifier(Employee employee, int EmployeeId) {
         String SQL = "UPDATE employee SET nom = ?, prenom = ?, salaire = ?, email = ?, phone = ?, role = ?, poste = ? WHERE id = ?";
         EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
@@ -222,7 +223,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI {
         }
     }
     @Override
-    public void supprimerEmployee(int EmployeeId) {
+    public void supprimer(int EmployeeId) {
         String SQL = "DELETE FROM employee WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             EmployeeController.viderLesChamps();

@@ -4,15 +4,12 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import DAO.CreerCompteDAOImpl;
-import Model.CreerCompteModel;
 import Model.Employee;
 import Model.EmployeeModel;
 import Model.LoginModel;
 import Model.Poste;
 import Model.Role;
 import Utilities.Utils;
-import View.CreerCompteView;
 import View.EmployeeView;
 import View.LimitedView;
 
@@ -184,7 +181,9 @@ public class EmployeeController {
         return id;
     }
     public static void viderLesChamps(){
-        if(LoginModel.getIsAdmin() == true){
+        boolean check = LoginModel.getIsAdmin();
+        check = true;////// BINMA 9ADINA HOLIDAYS O LOGIN 
+        if(check == true){
             EmployeeView employeeView = EmployeeView.getInstance();
             employeeView.getNomField().setText("");
             employeeView.getPrenomField().setText("");
@@ -195,7 +194,7 @@ public class EmployeeController {
             employeeView.getPosteComboBox().setSelectedIndex(-1);
             return;
         }
-        if(LoginModel.getIsAdmin() == false){
+        if(check == false){
             EmployeeView limitedView = LimitedView.getLimitedInstance();
             limitedView.getNomField().setText("");
             limitedView.getPrenomField().setText("");

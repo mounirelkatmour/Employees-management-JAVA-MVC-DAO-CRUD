@@ -46,7 +46,8 @@ public class LoginDAOImpl implements LoginDAOI {
                     String phone = rset.getString("phone");
                     String role = rset.getString("role");
                     String poste = rset.getString("poste");
-                    employee = new Employee(id, nom, prenom, salaire, email, phone, Role.valueOf(role), Poste.valueOf(poste));
+                    int holidayBalance = rset.getInt("holidayBalance");
+                    employee = new Employee(id, nom, prenom, salaire, email, phone, Role.valueOf(role), Poste.valueOf(poste),holidayBalance);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

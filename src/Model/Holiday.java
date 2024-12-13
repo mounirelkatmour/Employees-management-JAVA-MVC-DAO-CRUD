@@ -2,12 +2,14 @@ package Model;
 
 public class Holiday {
     private int id;
-    private String name;
+    private int idEmployee;
+    private HolidayType type;
     private String start;
     private String end;
-    public Holiday(int id, String name, String start, String end) {
+    public Holiday(int id,int idEmployee, HolidayType type, String start, String end) {
         this.id = id;
-        this.name = name;
+        this.id = idEmployee;
+        this.type = type;
         this.start = start;
         this.end = end;
     }
@@ -18,13 +20,18 @@ public class Holiday {
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getName() {
-        return name;
+    public int getIdEmployee() {
+        return idEmployee;
+    }
+    public void setIdEmployee(int idEmployee) {
+        this.idEmployee = idEmployee;
+    }
+    public HolidayType getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(HolidayType type) {
+        this.type = type;
     }
 
     public String getStart() {

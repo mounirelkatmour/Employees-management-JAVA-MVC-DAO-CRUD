@@ -34,11 +34,11 @@ public class EmployeeModel {
             return;
         }
         
-        Employee employee = new Employee(0, nom, prenom, salaireDouble, email, phone, role, poste);
-        dao.ajouterEmployee(employee);
+        Employee employee = new Employee(0, nom, prenom, salaireDouble, email, phone, role, poste,25);
+        dao.ajouter(employee);
     }
     public List<Employee> afficherEmployee() {
-        return dao.afficherEmployee();
+        return dao.afficher();
     }
     public List<Employee> findByEmail(String email) {
         return dao.findByEmail(email);
@@ -60,7 +60,7 @@ public class EmployeeModel {
     }
     public void supprimerEmployee(int id) {
         if(EmployeeView.SupprimerConfirmation()){
-            dao.supprimerEmployee(id);
+            dao.supprimer(id);
         }
         return;
     }
@@ -97,6 +97,6 @@ public class EmployeeModel {
         } 
         if(role != null) employee.setRole(role);
         if(poste != null) employee.setPoste(poste);
-        dao.modifierEmployee(employee,id);
+        dao.modifier(employee,id);
     }
 }

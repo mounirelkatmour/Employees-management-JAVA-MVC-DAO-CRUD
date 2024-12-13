@@ -41,7 +41,7 @@ public class EmployeeView extends JFrame {
     protected JLabel PosteLabel;
     protected JComboBox<Poste> PosteComboBox;
 
-    protected EmployeeView() {
+    public EmployeeView() {
         setTitle("Gestion des employés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(930, 520);

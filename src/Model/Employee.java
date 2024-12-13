@@ -12,7 +12,7 @@ public class Employee {
     private Poste poste;
     private int holidayBalance;
 
-    public Employee(int id, String nom, String prenom, double salaire, String email, String phone, Role role, Poste poste) {
+    public Employee(int id, String nom, String prenom, double salaire, String email, String phone, Role role, Poste poste,int holidayBalance) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
@@ -21,7 +21,7 @@ public class Employee {
         this.phone = phone;
         this.role = role;
         this.poste = poste;
-        this.holidayBalance=25;
+        this.holidayBalance=holidayBalance;
     }
     
     public int getId() {
