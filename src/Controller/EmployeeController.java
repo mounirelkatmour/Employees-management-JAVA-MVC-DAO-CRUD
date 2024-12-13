@@ -73,7 +73,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void findByEmail(String email) {

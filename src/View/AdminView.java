@@ -16,7 +16,7 @@ public class AdminView extends JFrame {
         employeeView.dispose();
         holidayView.dispose();
         tabbedPane.addTab("Gestion des Employés", employeeView.getContentPane());
-        tabbedPane.addTab("Gestion des Holidays", holidayView.getContentPane());
+        tabbedPane.addTab("Gestion des Congés", holidayView.getContentPane());
         add(tabbedPane);
         setVisible(true);
     }

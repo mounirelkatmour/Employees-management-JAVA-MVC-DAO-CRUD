@@ -13,6 +13,7 @@ import Model.HolidayModel;
 import Model.HolidayType;
 import Model.Poste;
 import View.EmployeeView;
+import View.HolidayView;
 
 public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
     private Connection connection;
@@ -76,6 +77,7 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
             stmt.setString(3,holiday.getStart());
             stmt.setString(4,holiday.getEnd());
             stmt.executeUpdate();
+            HolidayView.success("Congé ajouté avec succéss !");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -86,6 +88,14 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
     }
     @Override
     public void supprimer(int holidayId) {
+        String SQL = "DELETE FROM holiday WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setInt(1, holidayId);
+            stmt.executeUpdate();
+            HolidayView.success("Congé supprimé avec succéss !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public Employee findById(int EmployeeId) {

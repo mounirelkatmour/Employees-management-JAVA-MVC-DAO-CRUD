@@ -16,10 +16,10 @@ public class HolidayView extends JFrame {
     private JLabel typeLabel = new JLabel("Type");
     private JComboBox<HolidayType> typeComboBox = new JComboBox<>(HolidayType.values());
     private JLabel dateDebutLabel = new JLabel("Date de début");
-    private JTextField dateDebut = new JTextField(10);
+    private JTextField dateDebut = new JTextField("YYYY-MM-DD");
     private JLabel dateFinLabel = new JLabel("Date de fin");
-    private JTextField dateFin = new JTextField(10);
-    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Employé","Date début","Date fin","Type"}, 0){
+    private JTextField dateFin = new JTextField("YYYY-MM-DD");
+    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Employé","Type","Date début","Date fin"}, 0){
         @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -30,6 +30,7 @@ public class HolidayView extends JFrame {
     private JButton ajouterButton = new JButton("Ajouter");
     private JButton modifierButton = new JButton("Modifier");
     private JButton supprimerButton = new JButton("Supprimer");
+    private JButton afficherButton = new JButton("Afficher");
     private JPanel inputPanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
 
@@ -61,6 +62,7 @@ public class HolidayView extends JFrame {
         buttonPanel.add(ajouterButton);
         buttonPanel.add(modifierButton);
         buttonPanel.add(supprimerButton);
+        buttonPanel.add(afficherButton);
         generalPanel.add(buttonPanel, BorderLayout.SOUTH);
         
         add(generalPanel);
@@ -80,6 +82,9 @@ public class HolidayView extends JFrame {
     public String getDateFin() {
         return dateFin.getText();
     }
+    public JButton getAfficherButton() {
+        return afficherButton;
+    }
     public JButton getAjouterButton() {
         return ajouterButton;
     }
@@ -96,5 +101,14 @@ public class HolidayView extends JFrame {
     }
     public static HolidayView getInstance() {
         return INSTANCE;
+    }
+    public static void success(String message) {
+        JOptionPane.showMessageDialog(null, message, "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+    public static void fail(String message) {
+        JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public JTable getTable() {
+        return holidayTable;
     }
 }

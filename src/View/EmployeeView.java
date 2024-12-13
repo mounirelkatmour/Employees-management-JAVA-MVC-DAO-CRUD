@@ -14,7 +14,7 @@ public class EmployeeView extends JFrame {
     protected JPanel GeneralDown = new JPanel();
     protected JPanel ListContainer = new JPanel();
     protected JPanel ButtonsContainer = new JPanel();
-    protected DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire", "Phone", "Role", "Poste"}, 0){
+    protected DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Nom", "Prenom", "Email", "Salaire", "Phone", "Role", "Poste", "Holiday Balance"}, 0){
         @Override
             public boolean isCellEditable(int row, int column) {
                 return false;

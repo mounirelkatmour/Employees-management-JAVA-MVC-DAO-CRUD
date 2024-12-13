@@ -8,7 +8,7 @@ public class Holiday {
     private String end;
     public Holiday(int id,int idEmployee, HolidayType type, String start, String end) {
         this.id = id;
-        this.id = idEmployee;
+        this.idEmployee = idEmployee;
         this.type = type;
         this.start = start;
         this.end = end;

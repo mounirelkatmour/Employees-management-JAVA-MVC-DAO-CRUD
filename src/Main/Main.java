@@ -20,6 +20,6 @@ public class Main {
     public static void main(String[] args) {
         EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
         HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
-        AdminView adminView = AdminView.getInstance();
+        AdminView.getInstance();
     }
 }
