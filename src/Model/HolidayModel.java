@@ -34,6 +34,7 @@ public class HolidayModel {
         if (employee.getHolidayBalance() >= days) {
             employee.setHolidayBalance(employee.getHolidayBalance() - days);
             dao.ajouter(holiday);
+            dao.modifierEmployeeBalance(employee, employee.getId());
         } else {
             HolidayView.fail("Le nombre de jours de congés disponibles est insuffisant.");
         }

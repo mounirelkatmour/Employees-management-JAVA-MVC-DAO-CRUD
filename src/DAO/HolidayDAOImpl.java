@@ -86,6 +86,16 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
     @Override
     public void modifier(Holiday holiday,int holidayId) {
     }
+    public void modifierEmployeeBalance (Employee employee, int EmployeeId) {
+        String SQL = "UPDATE employee SET holidayBalance = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setInt(1, employee.getHolidayBalance());
+            stmt.setInt(2, EmployeeId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void supprimer(int holidayId) {
         String SQL = "DELETE FROM holiday WHERE id = ?";
