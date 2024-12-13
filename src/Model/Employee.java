@@ -10,6 +10,7 @@ public class Employee {
     private String phone;
     private Role role;
     private Poste poste;
+    private int holidayBalance;
 
     public Employee(int id, String nom, String prenom, double salaire, String email, String phone, Role role, Poste poste) {
         this.id = id;
@@ -20,6 +21,7 @@ public class Employee {
         this.phone = phone;
         this.role = role;
         this.poste = poste;
+        this.holidayBalance=25;
     }
     
     public int getId() {
@@ -84,5 +86,13 @@ public class Employee {
 
     public void setPoste(Poste poste) {
         this.poste = poste;
+    }
+
+    public int getHolidayBalance() {
+        return holidayBalance;
+    }
+
+    public void setHolidayBalance(int holidayBalance) {
+        this.holidayBalance = holidayBalance;
     }
 }
