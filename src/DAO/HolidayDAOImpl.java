@@ -85,6 +85,18 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
     
     @Override
     public void modifier(Holiday holiday,int holidayId) {
+        String SQL = "UPDATE holiday SET employee_id = ?, type = ?, start = ?, end = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setInt(1, holiday.getIdEmployee());
+            stmt.setString(2, holiday.getType().toString());
+            stmt.setString(3, holiday.getStart());
+            stmt.setString(4, holiday.getEnd());
+            stmt.setInt(5, holidayId);
+            stmt.executeUpdate();
+            HolidayView.success("Congé modifié avec succéss !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     public void modifierEmployeeBalance (Employee employee, int EmployeeId) {
         String SQL = "UPDATE employee SET holidayBalance = ? WHERE id = ?";
@@ -134,6 +146,28 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
             e.printStackTrace();
         }
         return employee;
+    }
+    public Holiday FindHolidayById(int holidayId) {
+        String SQL = "SELECT * FROM holiday WHERE id = ?";
+        Holiday holiday = null;
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setInt(1, holidayId);
+            try (ResultSet rset = stmt.executeQuery()) {
+                if (rset.next()) {
+                    int id = rset.getInt("id");
+                    int idEmployee = rset.getInt("employee_id");
+                    Model.HolidayType type = Model.HolidayType.valueOf(rset.getString("type"));
+                    String start = rset.getString("start");
+                    String end = rset.getString("end");
+                    holiday = new Holiday(id, idEmployee, type, start, end);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return holiday;
     }
 }
 

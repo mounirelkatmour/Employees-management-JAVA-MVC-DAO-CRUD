@@ -54,7 +54,46 @@ public class HolidayModel {
     public Employee FindById(int EmployeeId) {
         return dao.findById(EmployeeId);
     }
-    public void supprimerHoliday(int holidayId) {
+    public void ModifierHoliday(Holiday updatedHoliday, Holiday oldHoliday) {
+        int newDays = calculateHolidayTime(updatedHoliday.getStart(), updatedHoliday.getEnd());
+        int oldDays = calculateHolidayTime(oldHoliday.getStart(), oldHoliday.getEnd());
+        if (startCheck(updatedHoliday.getStart())) {
+            HolidayView.fail("La date de début doit venir avant aujourd'hui.");
+            return;
+        }
+        if (newDays <= 0) {
+            HolidayView.fail("La date de fin doit venir après la date de début.");
+            return;
+        }
+        Employee newEmployee = FindById(updatedHoliday.getIdEmployee());
+        Employee oldEmployee = FindById(oldHoliday.getIdEmployee());
+        
+        if (newEmployee.getHolidayBalance() >= newDays) {
+            oldEmployee.setHolidayBalance(oldEmployee.getHolidayBalance() + oldDays);
+            dao.modifierEmployeeBalance(oldEmployee, oldEmployee.getId());
+            newEmployee.setHolidayBalance(newEmployee.getHolidayBalance() - newDays);
+            dao.modifierEmployeeBalance(newEmployee, newEmployee.getId());
+            dao.modifier(updatedHoliday, updatedHoliday.getId());
+        } else {
+            HolidayView.fail("Le nombre de jours de congés disponibles est insuffisant pour le nouvel employé.");
+            return;
+        }
+    }
+    
+    public void modifierEmployeeBalanceRecover(int days,int EmployeeId) {
+        Employee employee = this.FindById(EmployeeId);
+        employee.setHolidayBalance(employee.getHolidayBalance() + days);
+        dao.modifierEmployeeBalance(employee, EmployeeId);
+    }
+    public Holiday FindHolidayById(int holidayId) {
+        return dao.FindHolidayById(holidayId);
+    }
+    public void supprimerHoliday(Holiday oldHoliday) {
+        int holidayId = oldHoliday.getId();
+        int oldDays = calculateHolidayTime(oldHoliday.getStart(), oldHoliday.getEnd());
+        Employee oldEmployee = FindById(oldHoliday.getIdEmployee());
+        oldEmployee.setHolidayBalance(oldEmployee.getHolidayBalance() + oldDays);
+        dao.modifierEmployeeBalance(oldEmployee, oldEmployee.getId());
         dao.supprimer(holidayId);
     }
 }

@@ -13,6 +13,13 @@ public class Holiday {
         this.start = start;
         this.end = end;
     }
+    public Holiday() {
+        this.id = 0;
+        this.idEmployee = 0;
+        this.type = null;
+        this.start = null;
+        this.end = null;
+    }
     public int getId() {
         return id;
     }

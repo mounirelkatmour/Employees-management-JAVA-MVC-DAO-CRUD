@@ -25,6 +25,7 @@ public class HolidayController {
         setEmployeesInComboBox();
         holidayView.getAjouterButton().addActionListener(e -> this.ajouterHoliday());
         holidayView.getAfficherButton().addActionListener(e -> this.afficherHoliday());
+        holidayView.getModifierButton().addActionListener(e -> this.ModifierHoliday());
         holidayView.getSupprimerButton().addActionListener(e -> this.supprimerHoliday());
         this.afficherHoliday();
     }
@@ -49,17 +50,33 @@ public class HolidayController {
             model.addRow(new Object[]{holiday.getId(), employee.getNom() + " " + employee.getPrenom(), holiday.getType(), holiday.getStart(), holiday.getEnd()});
         }
     }
+    public void ModifierHoliday() {
+        int selectedRow = holidayView.getTable().getSelectedRow();
+    
+        if (selectedRow == -1) {
+            HolidayView.fail("Veuillez sélectionner une ligne.");
+            return;
+        }
+        int idHoliday = Integer.parseInt(holidayView.getTable().getModel().getValueAt(selectedRow, 0).toString());
+        Holiday oldHoliday = holidayModel.FindHolidayById(idHoliday);
+        Holiday updatedHoliday = new Holiday();
+        updatedHoliday.setId(idHoliday);
+        updatedHoliday.setIdEmployee(Integer.parseInt(holidayView.getNomEmployeComboBox().getSelectedItem().toString().split(" - ")[0]));
+        updatedHoliday.setType((HolidayType) holidayView.getTypeComboBox().getSelectedItem());
+        updatedHoliday.setStart(holidayView.getDateDebut());
+        updatedHoliday.setEnd(holidayView.getDateFin());
+        holidayModel.ModifierHoliday(updatedHoliday, oldHoliday);
+        this.afficherHoliday();
+    }
     public void supprimerHoliday() {
         int selectedRow = holidayView.getTable().getSelectedRow();
-        if (selectedRow != -1) {
-            try {
-                int id = Integer.parseInt(holidayView.getTable().getModel().getValueAt(selectedRow, 0).toString());
-                holidayModel.supprimerHoliday(id);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid ID format.");
-            }
-        } else {
-            HolidayView.fail("Veuillez choisir un employé.");
+        if(selectedRow == -1) {
+            HolidayView.fail("Veuillez Sélectionner une ligne.");
+            return;
+        }else{
+            int idHoliday = Integer.parseInt(holidayView.getTable().getModel().getValueAt(selectedRow, 0).toString());
+            Holiday oldHoliday = holidayModel.FindHolidayById(idHoliday);
+            holidayModel.supprimerHoliday(oldHoliday);
         }
         this.afficherHoliday();
     }
