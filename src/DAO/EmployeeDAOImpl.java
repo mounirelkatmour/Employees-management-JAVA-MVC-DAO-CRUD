@@ -47,7 +47,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
     }
     @Override
     public void ajouter(Employee employee) {
-        String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste, holidayBalance) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, employee.getNom());
@@ -57,6 +57,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             stmt.setString(5, employee.getPhone());            
             stmt.setString(6, employee.getRole().name());
             stmt.setString(7, employee.getPoste().name());
+            stmt.setInt(8, employee.getHolidayBalance());
             stmt.executeUpdate();
             EmployeeView.AjouterSuccess(employee);
         } catch (SQLException e) {

@@ -39,6 +39,7 @@ public class HolidayController {
         Holiday holiday = new Holiday(1,Employeeid, type, dateDebut, dateFin);
         Employee employee = holidayModel.FindById(Employeeid);
         holidayModel.ajouterHoliday(holiday,employee);
+        this.afficherHoliday();
     }
     public void afficherHoliday() {
         DefaultTableModel model = (DefaultTableModel) holidayView.getHolidayTable().getModel();

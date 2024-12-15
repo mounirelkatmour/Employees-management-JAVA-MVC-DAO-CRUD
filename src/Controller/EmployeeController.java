@@ -82,7 +82,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void findByFullName(String firstname, String lastname) {
@@ -92,7 +92,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void findByFirstName(String firstname) {
@@ -101,7 +101,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(),e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void findByLastName(String lastname) {
@@ -110,7 +110,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void findByPhone(String phone) {
@@ -118,7 +118,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void findBySalaire(double salaire) {
@@ -126,7 +126,7 @@ public class EmployeeController {
         DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
         tableModel.setRowCount(0);
         for(Employee e : employees) {
-            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste()});
+            tableModel.addRow(new Object[]{e.getId(), e.getNom(), e.getPrenom(), e.getEmail(), e.getSalaire(), e.getPhone(), e.getRole(), e.getPoste(),e.getHolidayBalance()});
         }
     }
     public void supprimerEmployee() {
