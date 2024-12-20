@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import Controller.EmployeeController;
+import Controller.HolidayController;
 import Model.Employee;
 import Model.Poste;
 import Model.Role;
@@ -59,6 +60,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             stmt.setString(7, employee.getPoste().name());
             stmt.setInt(8, employee.getHolidayBalance());
             stmt.executeUpdate();
+            HolidayController.setEmployeesInComboBox();
             EmployeeView.AjouterSuccess(employee);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -218,6 +220,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             stmt.setString(7, employee.getPoste().name());
             stmt.setInt(8, EmployeeId);
             stmt.executeUpdate();
+            HolidayController.setEmployeesInComboBox();
             EmployeeView.ModifierSuccess();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -230,6 +233,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             EmployeeController.viderLesChamps();
             stmt.setInt(1, EmployeeId);
             stmt.executeUpdate();
+            HolidayController.setEmployeesInComboBox();
             EmployeeView.SupprimerSuccess();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,9 +1,6 @@
 package Model;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -90,10 +87,11 @@ public class HolidayModel {
     }
     public void supprimerHoliday(Holiday oldHoliday) {
         int holidayId = oldHoliday.getId();
+        int employeeId = oldHoliday.getIdEmployee();
         int oldDays = calculateHolidayTime(oldHoliday.getStart(), oldHoliday.getEnd());
-        Employee oldEmployee = FindById(oldHoliday.getIdEmployee());
+        Employee oldEmployee = FindById(employeeId);
         oldEmployee.setHolidayBalance(oldEmployee.getHolidayBalance() + oldDays);
         dao.modifierEmployeeBalance(oldEmployee, oldEmployee.getId());
         dao.supprimer(holidayId);
-    }
+    }   
 }

@@ -67,6 +67,7 @@ public class EmployeeController {
         Role role = (Role) employeeView.getRoleComboBox().getSelectedItem();
         Poste poste = (Poste) employeeView.getPosteComboBox().getSelectedItem();
         employeeModel.ajouterEmployee(nom, prenom, salaire, email, phone, role , poste);
+        this.afficherEmployee();
     }
     public void afficherEmployee() {
         List<Employee> employees = employeeModel.afficherEmployee();
