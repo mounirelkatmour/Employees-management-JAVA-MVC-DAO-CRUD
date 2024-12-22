@@ -9,27 +9,28 @@ public class LoginModel {
     public LoginModel(LoginDAOImpl dao) {
         this.dao = dao;
     }
-    public boolean Login(String username, String password) {
+    public Role Login(String username, String password) {
         int CheckId;
         if (username.trim().isEmpty() || password.trim().isEmpty()) {
             LoginView.LoginFail("Veuillez remplir tous les champs");
-            return false;
+            return null;
         }
         if(password.length() < 8) {
             LoginView.LoginFail("Le mot de passe doit contenir au moins 8 caractères.");
-            return false;
+            return null;
         }
         CheckId = dao.Login(username, password);
         if (CheckId == -1) {
             LoginView.LoginFail("Nom d'utilisateur ou mot de passe incorrect.");
-            return false;
+            return null;
         }
         Employee employee = dao.FindById(CheckId);
         if(employee.getRole() == Role.ADMIN){
             isAdmin = true;
         };
-        return true;
+        return employee.getRole();
     }
+
     public static boolean getIsAdmin(){
         return isAdmin;
     }

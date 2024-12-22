@@ -11,7 +11,6 @@ import Model.Poste;
 import Model.Role;
 import Utilities.Utils;
 import View.EmployeeView;
-import View.LimitedView;
 
 public class EmployeeController {
     protected EmployeeModel employeeModel;

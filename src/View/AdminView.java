@@ -3,12 +3,20 @@ package View;
 import javax.swing.*;
 
 public class AdminView extends JFrame {
-    private static AdminView INSTANCE = new AdminView();
+    private static AdminView INSTANCE = null;
     private JTabbedPane tabbedPane = new JTabbedPane();
-    private EmployeeView employeeView = EmployeeView.getInstance();
-    private HolidayView holidayView = HolidayView.getInstance();
+    private EmployeeView employeeView;
+    private HolidayView holidayView;
 
-    public AdminView() {
+    public static AdminView getInstance(EmployeeView employeeView, HolidayView holidayView) {
+        if (INSTANCE == null) {
+            INSTANCE = new AdminView(employeeView, holidayView);
+        }
+        return INSTANCE;
+    }
+    private AdminView(EmployeeView employeeView, HolidayView holidayView) {
+        this.employeeView = employeeView;
+        this.holidayView = holidayView;
         setTitle("Admin Dashboard - Gestion des Employés et Congés");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(930, 520);
@@ -19,8 +27,5 @@ public class AdminView extends JFrame {
         tabbedPane.addTab("Gestion des Congés", holidayView.getContentPane());
         add(tabbedPane);
         setVisible(true);
-    }
-    public static AdminView getInstance() {
-        return INSTANCE;
     }
 }

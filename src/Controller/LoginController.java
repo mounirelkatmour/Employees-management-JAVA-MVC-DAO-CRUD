@@ -5,10 +5,10 @@ import DAO.HolidayDAOImpl;
 import Model.EmployeeModel;
 import Model.HolidayModel;
 import Model.LoginModel;
+import Model.Role;
 import View.AdminView;
 import View.EmployeeView;
 import View.HolidayView;
-import View.LimitedView;
 import View.LoginView;
 
 public class LoginController {
@@ -24,12 +24,24 @@ public class LoginController {
     private void Login() {
         String username = loginView.getUsername();
         String password = loginView.getPassword();
-        boolean LoggedIn = loginModel.Login(username, password);
-        if (LoggedIn == true) {
+        Role role = loginModel.Login(username, password);
+        if (role == Role.ADMIN) {
             loginView.dispose();
             EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
             HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
-            AdminView.getInstance();
+            AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
+        }
+        if (role == Role.MANAGER) {
+            loginView.dispose();
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
+            AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
+        }
+        if (role == Role.EMPLOYEE) {
+            loginView.dispose();
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
+            AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
         }
     }
 }

@@ -20,7 +20,19 @@ public class HolidayModel {
     public List<Holiday> afficher() {
         return dao.afficher();
     }
+    private boolean isValidDate(String date) {
+        try {
+            LocalDate.parse(date);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public void ajouterHoliday(Holiday holiday, Employee employee) {
+        if (!isValidDate(holiday.getStart()) || !isValidDate(holiday.getEnd())) {
+            HolidayView.fail("Les dates doivent être des chiffres au format YYYY-MM-DD.");
+            return;
+        }        
         int days = calculateHolidayTime(holiday.getStart(), holiday.getEnd());
         if (startCheck(holiday.getStart())) {
             HolidayView.fail("La date de début doit venir avant aujourd'hui.");
@@ -74,6 +86,10 @@ public class HolidayModel {
         return dao.findById(EmployeeId);
     }
     public void ModifierHoliday(Holiday updatedHoliday, Holiday oldHoliday) {
+        if (!isValidDate(updatedHoliday.getStart()) || !isValidDate(updatedHoliday.getEnd())) {
+            HolidayView.fail("Les dates doivent être des chiffres au format YYYY-MM-DD.");
+            return;
+        }  
         int newDays = calculateHolidayTime(updatedHoliday.getStart(), updatedHoliday.getEnd());
         int oldDays = calculateHolidayTime(oldHoliday.getStart(), oldHoliday.getEnd());
         if (startCheck(updatedHoliday.getStart())) {
