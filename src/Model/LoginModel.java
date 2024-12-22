@@ -9,7 +9,7 @@ public class LoginModel {
     public LoginModel(LoginDAOImpl dao) {
         this.dao = dao;
     }
-    public Role Login(String username, String password) {
+    public Employee Login(String username, String password) {
         int CheckId;
         if (username.trim().isEmpty() || password.trim().isEmpty()) {
             LoginView.LoginFail("Veuillez remplir tous les champs");
@@ -28,7 +28,7 @@ public class LoginModel {
         if(employee.getRole() == Role.ADMIN){
             isAdmin = true;
         };
-        return employee.getRole();
+        return employee;
     }
 
     public static boolean getIsAdmin(){

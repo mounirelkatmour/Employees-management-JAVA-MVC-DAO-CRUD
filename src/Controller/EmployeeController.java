@@ -16,21 +16,28 @@ public class EmployeeController {
     protected EmployeeModel employeeModel;
     protected static EmployeeView employeeView;
     private static boolean isDeselecting = false;
-    public EmployeeController(EmployeeModel employeeModel, EmployeeView employeeView) {
+    private Employee employeelogged;
+    public EmployeeController(EmployeeModel employeeModel, EmployeeView employeeView,Employee employee) {
+        this.employeelogged = employee;
         this.employeeModel = employeeModel;
         EmployeeController.employeeView = employeeView;
         EmployeeController.employeeView.getAjouterButton().addActionListener(e -> this.ajouterEmployee());
         EmployeeController.employeeView.getAfficherButton().addActionListener(e -> {
             if (employeeView.getNomField().getText().isEmpty() && employeeView.getPrenomField().getText().isEmpty() && employeeView.getSalaireField().getText().isEmpty() && employeeView.getEmailField().getText().isEmpty() && employeeView.getPhoneField().getText().isEmpty()) {
-                this.afficherEmployee();
+                if(employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)){
+                    this.afficherEmployee();
+                }
+                if(employeelogged.getRole().equals(Role.EMPLOYEE)){
+                    this.afficherEmployeeLogged();
+                }
             }
-            if (!employeeView.getNomField().getText().isEmpty() && !employeeView.getPrenomField().getText().isEmpty()){
+            if ((employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)) && !employeeView.getNomField().getText().isEmpty() && !employeeView.getPrenomField().getText().isEmpty()){
                 String firstname = employeeView.getNomField().getText();
                 String lastname = employeeView.getPrenomField().getText();
                 this.findByFullName(firstname,lastname);
                 this.deselectEmployee();
             }
-            if (employeeView.getNomField().getText().isEmpty() || employeeView.getPrenomField().getText().isEmpty() ){
+            if ((employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)) && (employeeView.getNomField().getText().isEmpty() || employeeView.getPrenomField().getText().isEmpty() )){
                 if (!employeeView.getNomField().getText().isEmpty()) {
                     String lastname = employeeView.getNomField().getText();
                     this.findByLastName(lastname);
@@ -42,17 +49,17 @@ public class EmployeeController {
                     this.deselectEmployee();
                 }
             }
-            if (!employeeView.getPhoneField().getText().isEmpty()) {
+            if ((employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)) && !employeeView.getPhoneField().getText().isEmpty()) {
                 String phone = employeeView.getPhoneField().getText();
                 this.findByPhone(phone);
                 this.deselectEmployee();
             }
-            if (!employeeView.getEmailField().getText().isEmpty()) {
+            if ((employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)) && !employeeView.getEmailField().getText().isEmpty()) {
                 String email = employeeView.getEmailField().getText();
                 this.findByEmail(email);
                 this.deselectEmployee();
             }
-            if (!employeeView.getSalaireField().getText().isEmpty()) {
+            if ((employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)) && !employeeView.getSalaireField().getText().isEmpty()) {
                 String salaireString = employeeView.getSalaireField().getText();
                 double salaire = Double.parseDouble(salaireString);
                 this.findBySalaire(salaire);
@@ -64,7 +71,12 @@ public class EmployeeController {
         EmployeeController.employeeView.getCreerCompteButton().addActionListener(e -> new CreerCompteController());
         EmployeeController.employeeView.getTable().getSelectionModel().addListSelectionListener(e -> this.setEmployeeInformations());
         EmployeeController.employeeView.getDeselectButton().addActionListener(e -> EmployeeController.deselectEmployee());
-        this.afficherEmployee();
+        if(employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)){
+            this.afficherEmployee();
+        }
+        if(employeelogged.getRole().equals(Role.EMPLOYEE)){
+            this.afficherEmployeeLogged();
+        }
     }
     public void ajouterEmployee() {
         String nom  = employeeView.getNomField().getText();
@@ -172,7 +184,12 @@ public class EmployeeController {
                 if (employeeToUpdate != null) {
                     employeeModel.updateEmployee(employeeToUpdate,id, nom, prenom, email, salaire, phone, role, poste);
                     this.deselectEmployee();
-                    this.afficherEmployee();
+                    if(employeelogged.getRole().equals(Role.ADMIN) || employeelogged.getRole().equals(Role.MANAGER)){
+                        this.afficherEmployee();
+                    }
+                    if(employeelogged.getRole().equals(Role.EMPLOYEE)){
+                        this.afficherEmployeeLogged();
+                    }
                 } else {
                     EmployeeView.ModifierFail("L'employé avec l'ID spécifié n'existe pas.");
                 }
@@ -239,5 +256,11 @@ public class EmployeeController {
         employeeView.getDeselectButton().setVisible(false);
         employeeView.getTable().clearSelection();
         isDeselecting = false;
+    }
+    public void afficherEmployeeLogged() {
+        Employee employeeloggeddb = employeeModel.findById(employeelogged.getId());
+        DefaultTableModel tableModel = (DefaultTableModel) employeeView.getTable().getModel();
+        tableModel.setRowCount(0);
+        tableModel.addRow(new Object[]{employeeloggeddb.getId(), employeeloggeddb.getNom(), employeeloggeddb.getPrenom(), employeeloggeddb.getEmail(), employeeloggeddb.getSalaire(), employeeloggeddb.getPhone(), employeeloggeddb.getRole(), employeeloggeddb.getPoste(),employeeloggeddb.getHolidayBalance()});
     }
 }

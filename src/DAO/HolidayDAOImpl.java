@@ -166,5 +166,27 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
         }
         return holiday;
     }
+    public Holiday findByIdLoggedHoliday(int EmployeeId) {
+        String SQL = "SELECT * FROM holiday WHERE employee_id = ?";
+        Holiday holiday = null;
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setInt(1, EmployeeId);
+            try (ResultSet rset = stmt.executeQuery()) {
+                if (rset.next()) {
+                    int id = rset.getInt("id");
+                    int idEmployee = rset.getInt("employee_id");
+                    Model.HolidayType type = Model.HolidayType.valueOf(rset.getString("type"));
+                    String start = rset.getString("start");
+                    String end = rset.getString("end");
+                    holiday = new Holiday(id, idEmployee, type, start, end);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return holiday;
+    }
 }
 

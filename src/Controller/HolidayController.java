@@ -10,13 +10,16 @@ import Model.Employee;
 import Model.Holiday;
 import Model.HolidayModel;
 import Model.HolidayType;
+import Model.Role;
 import View.HolidayView;
 
 public class HolidayController {
     private static HolidayModel holidayModel;
     private static HolidayView holidayView;
     private boolean isDeselecting = false;
-    public HolidayController(HolidayModel model, HolidayView view) {
+    private Employee employeeLogged;
+    public HolidayController(HolidayModel model, HolidayView view,Employee employee) {
+        this.employeeLogged = employee;
         this.holidayModel = model;
         this.holidayView = view;
         setEmployeesInComboBox();
@@ -29,7 +32,12 @@ public class HolidayController {
         holidayView.getSupprimerButton().addActionListener(e -> this.supprimerHoliday());
         holidayView.getTable().getSelectionModel().addListSelectionListener(e -> this.setHolidayInformations());
         holidayView.getDeselectButton().addActionListener(e -> this.deselectHoliday());
-        this.afficherHoliday();
+        if (employeeLogged.getRole().equals(Role.ADMIN) || employeeLogged.getRole().equals(Role.MANAGER)) {
+            this.afficherHoliday();
+        }
+        if (employeeLogged.getRole().equals(Role.EMPLOYEE)) {
+            this.afficherHolidayLogged();
+        }
     }
 
     public void ajouterHoliday() {
@@ -45,13 +53,16 @@ public class HolidayController {
         this.afficherHoliday();
     }
     public void afficherHoliday() {
-        DefaultTableModel model = (DefaultTableModel) holidayView.getHolidayTable().getModel();
         Employee employee;
-        model.setRowCount(0);
-        List<Holiday> holidays = holidayModel.afficher();
-        for (Holiday holiday : holidays) {
-            employee = holidayModel.FindById(holiday.getIdEmployee());
-            model.addRow(new Object[]{holiday.getId(), employee.getNom() + " " + employee.getPrenom(), holiday.getType(), holiday.getStart(), holiday.getEnd()});
+        List<Holiday> holidays = null;
+        holidays = holidayModel.afficher();
+        if (!holidays.isEmpty()) {
+            DefaultTableModel model = (DefaultTableModel) holidayView.getHolidayTable().getModel();
+            model.setRowCount(0);
+            for (Holiday holiday : holidays) {
+                employee = holidayModel.FindById(holiday.getIdEmployee());
+                model.addRow(new Object[]{holiday.getId(), employee.getNom() + " " + employee.getPrenom(), holiday.getType(), holiday.getStart(), holiday.getEnd()});
+            }
         }
     }
     public void ModifierHoliday() {
@@ -127,4 +138,14 @@ public class HolidayController {
         holidayView.setDateDebut("YYYY-MM-DD");
         holidayView.setDateFin("YYYY-MM-DD");
     }
+    public void afficherHolidayLogged(){
+        Holiday holiday = HolidayModel.afficherHolidayLogged(employeeLogged.getId());
+        DefaultTableModel model = (DefaultTableModel) holidayView.getHolidayTable().getModel();
+        model.setRowCount(0);
+        if (holiday != null) {
+            model.addRow(new Object[]{holiday.getId(), employeeLogged.getNom() + " " + employeeLogged.getPrenom(), holiday.getType(), holiday.getStart(), holiday.getEnd()});
+        }else{
+            holidayView.getTable().setModel(new DefaultTableModel(new Object[]{"Aucun holiday à afficher"}, 0));
+        }
+    };
 }

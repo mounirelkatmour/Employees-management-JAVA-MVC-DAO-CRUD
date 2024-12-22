@@ -2,14 +2,17 @@ package Controller;
 
 import DAO.EmployeeDAOImpl;
 import DAO.HolidayDAOImpl;
+import Model.Employee;
 import Model.EmployeeModel;
 import Model.HolidayModel;
 import Model.LoginModel;
 import Model.Role;
 import View.AdminView;
 import View.EmployeeView;
+import View.EmployeeViewEmployee;
 import View.EmployeeViewManager;
 import View.HolidayView;
+import View.HolidayViewEmployee;
 import View.HolidayViewManager;
 import View.LoginView;
 
@@ -26,26 +29,32 @@ public class LoginController {
     private void Login() {
         String username = loginView.getUsername();
         String password = loginView.getPassword();
-        Role role = loginModel.Login(username, password);
+        Employee employee = loginModel.Login(username, password);
+        Role role = null;
+        try {
+            role = employee.getRole();
+        } catch (NullPointerException e) {
+            return;
+        }
         if (role == Role.ADMIN) {
             loginView.dispose();
-            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
-            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance(),employee);
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance(),employee);
             AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
         }
         if (role == Role.MANAGER) {
             loginView.dispose();
-            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeViewManager.getInstance());
-            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayViewManager.getInstance());
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeViewManager.getInstance(),employee);
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayViewManager.getInstance(),employee);
             AdminView.getInstance(EmployeeViewManager.getInstance(),HolidayViewManager.getInstance());
             HolidayView.getInstance().dispose();
             EmployeeView.getInstance().dispose();
         }
         if (role == Role.EMPLOYEE) {
             loginView.dispose();
-            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
-            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
-            AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeViewEmployee.getInstance(),employee);
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayViewEmployee.getInstance(),employee);
+            AdminView.getInstance(EmployeeViewEmployee.getInstance(),HolidayViewEmployee.getInstance());
             HolidayView.getInstance().dispose();
             EmployeeView.getInstance().dispose();
         }
