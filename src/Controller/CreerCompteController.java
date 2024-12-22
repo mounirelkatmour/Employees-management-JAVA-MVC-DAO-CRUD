@@ -30,6 +30,7 @@ public class CreerCompteController {
     private void CreateAccountCheck() {
         boolean isSuccess = creerCompte();
         if (isSuccess) {
+            EmployeeController.deselectEmployee();
             creerCompteView.dispose();
         }
     }

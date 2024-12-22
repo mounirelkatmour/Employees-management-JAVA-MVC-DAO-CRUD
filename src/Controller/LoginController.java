@@ -1,9 +1,13 @@
 package Controller;
 
 import DAO.EmployeeDAOImpl;
+import DAO.HolidayDAOImpl;
 import Model.EmployeeModel;
+import Model.HolidayModel;
 import Model.LoginModel;
+import View.AdminView;
 import View.EmployeeView;
+import View.HolidayView;
 import View.LimitedView;
 import View.LoginView;
 
@@ -23,16 +27,9 @@ public class LoginController {
         boolean LoggedIn = loginModel.Login(username, password);
         if (LoggedIn == true) {
             loginView.dispose();
-            if(LoginModel.getIsAdmin() == true) {
-                EmployeeModel model = new EmployeeModel(new EmployeeDAOImpl());
-                EmployeeView view = EmployeeView.getInstance();
-                new EmployeeController(model, view);
-            }
-            if(LoginModel.getIsAdmin() == false) {
-                EmployeeModel model = new EmployeeModel(new EmployeeDAOImpl());
-                EmployeeView view = LimitedView.getLimitedInstance();
-                new EmployeeController(model, view);
-            }
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
+            AdminView.getInstance();
         }
     }
 }

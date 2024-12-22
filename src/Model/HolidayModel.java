@@ -55,24 +55,20 @@ public class HolidayModel {
         int newDays = calculateHolidayTime(updatedHoliday.getStart(), updatedHoliday.getEnd());
         int oldDays = calculateHolidayTime(oldHoliday.getStart(), oldHoliday.getEnd());
         if (startCheck(updatedHoliday.getStart())) {
-            HolidayView.fail("La date de début doit venir avant aujourd'hui.");
+            HolidayView.fail("La date de début doit venir apres aujourd'hui.");
             return;
         }
         if (newDays <= 0) {
             HolidayView.fail("La date de fin doit venir après la date de début.");
             return;
         }
-        Employee newEmployee = FindById(updatedHoliday.getIdEmployee());
-        Employee oldEmployee = FindById(oldHoliday.getIdEmployee());
-        
-        if (newEmployee.getHolidayBalance() >= newDays) {
-            oldEmployee.setHolidayBalance(oldEmployee.getHolidayBalance() + oldDays);
-            dao.modifierEmployeeBalance(oldEmployee, oldEmployee.getId());
-            newEmployee.setHolidayBalance(newEmployee.getHolidayBalance() - newDays);
-            dao.modifierEmployeeBalance(newEmployee, newEmployee.getId());
+        Employee employee = FindById(updatedHoliday.getIdEmployee());
+        if (employee.getHolidayBalance() + oldDays >= newDays) {
+            employee.setHolidayBalance(employee.getHolidayBalance() + oldDays - newDays);
+            dao.modifierEmployeeBalance(employee, employee.getId());
             dao.modifier(updatedHoliday, updatedHoliday.getId());
         } else {
-            HolidayView.fail("Le nombre de jours de congés disponibles est insuffisant pour le nouvel employé.");
+            HolidayView.fail("Le nombre de jours de congés disponibles est insuffisant.");
             return;
         }
     }
@@ -95,3 +91,4 @@ public class HolidayModel {
         dao.supprimer(holidayId);
     }   
 }
+

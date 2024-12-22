@@ -1,12 +1,10 @@
 package View;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import Model.Employee;
-import Model.HolidayType;
-import Model.Role;
-
 import java.awt.*;
+
+import javax.swing.table.DefaultTableModel;
+import Model.HolidayType;
 
 public class HolidayView extends JFrame {
     private static final HolidayView INSTANCE = new HolidayView();
@@ -31,6 +29,7 @@ public class HolidayView extends JFrame {
     private JButton modifierButton = new JButton("Modifier");
     private JButton supprimerButton = new JButton("Supprimer");
     private JButton afficherButton = new JButton("Afficher");
+    private JButton deselectButton = new JButton("Désélectionner");
     private JPanel inputPanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
 
@@ -63,6 +62,8 @@ public class HolidayView extends JFrame {
         buttonPanel.add(modifierButton);
         buttonPanel.add(supprimerButton);
         buttonPanel.add(afficherButton);
+        buttonPanel.add(deselectButton);
+        deselectButton.setVisible(false);
         generalPanel.add(buttonPanel, BorderLayout.SOUTH);
         
         add(generalPanel);
@@ -76,11 +77,23 @@ public class HolidayView extends JFrame {
     public JComboBox<HolidayType> getTypeComboBox() {
         return typeComboBox;
     }
+    public void setTypeComboBox(JComboBox<HolidayType> typeComboBox) {
+        this.typeComboBox = typeComboBox;
+    }
     public String getDateDebut() {
         return dateDebut.getText();
     }
+
+    public void setDateDebut(String dateDebut) {
+        this.dateDebut.setText(dateDebut);
+    }
+
     public String getDateFin() {
         return dateFin.getText();
+    }
+
+    public void setDateFin(String dateFin) {
+        this.dateFin.setText(dateFin);
     }
     public JButton getAfficherButton() {
         return afficherButton;
@@ -110,5 +123,12 @@ public class HolidayView extends JFrame {
     }
     public JTable getTable() {
         return holidayTable;
+    }
+    public JButton getDeselectButton() {
+        return deselectButton;
+    }
+
+    public void setDeselectButton(JButton deselectButton) {
+        this.deselectButton = deselectButton;
     }
 }

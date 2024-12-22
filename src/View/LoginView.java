@@ -33,8 +33,10 @@ public class LoginView extends JFrame{
         InputsContainer.add(PasswordLabel,2);
         InputsContainer.add(Password,3);
         ButtonsContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
+        Login.setPreferredSize(new Dimension(150, 30));
+        Login.setBackground(new Color(41, 144, 59));
+        Login.setForeground(Color.WHITE);
         ButtonsContainer.add(Login);
-
     }
     public String getUsername() {
         return Username.getText();
@@ -56,8 +58,5 @@ public class LoginView extends JFrame{
     }
     public static void LoginFail(String message) {
         JOptionPane.showMessageDialog(null, message, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    public static void LoginSuccess(String message) {
-        JOptionPane.showMessageDialog(null, "Welcome Back "+ message +" !", "Success", JOptionPane.INFORMATION_MESSAGE);
     }
 }

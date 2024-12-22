@@ -16,6 +16,7 @@ import View.LimitedView;
 public class EmployeeController {
     protected EmployeeModel employeeModel;
     protected static EmployeeView employeeView;
+    private static boolean isDeselecting = false;
     public EmployeeController(EmployeeModel employeeModel, EmployeeView employeeView) {
         this.employeeModel = employeeModel;
         EmployeeController.employeeView = employeeView;
@@ -28,34 +29,42 @@ public class EmployeeController {
                 String firstname = employeeView.getNomField().getText();
                 String lastname = employeeView.getPrenomField().getText();
                 this.findByFullName(firstname,lastname);
+                this.deselectEmployee();
             }
             if (employeeView.getNomField().getText().isEmpty() || employeeView.getPrenomField().getText().isEmpty() ){
                 if (!employeeView.getNomField().getText().isEmpty()) {
                     String lastname = employeeView.getNomField().getText();
                     this.findByLastName(lastname);
+                    this.deselectEmployee();
                 }
                 if (!employeeView.getPrenomField().getText().isEmpty()) {
                     String firstname = employeeView.getPrenomField().getText();
                     this.findByFirstName(firstname);
+                    this.deselectEmployee();
                 }
             }
             if (!employeeView.getPhoneField().getText().isEmpty()) {
                 String phone = employeeView.getPhoneField().getText();
                 this.findByPhone(phone);
+                this.deselectEmployee();
             }
             if (!employeeView.getEmailField().getText().isEmpty()) {
                 String email = employeeView.getEmailField().getText();
                 this.findByEmail(email);
+                this.deselectEmployee();
             }
             if (!employeeView.getSalaireField().getText().isEmpty()) {
                 String salaireString = employeeView.getSalaireField().getText();
                 double salaire = Double.parseDouble(salaireString);
                 this.findBySalaire(salaire);
+                this.deselectEmployee();
             }
         });
         EmployeeController.employeeView.getSupprimerButton().addActionListener(e -> this.supprimerEmployee());
         EmployeeController.employeeView.getModifierButton().addActionListener(e -> this.updateEmployee());
         EmployeeController.employeeView.getCreerCompteButton().addActionListener(e -> new CreerCompteController());
+        EmployeeController.employeeView.getTable().getSelectionModel().addListSelectionListener(e -> this.setEmployeeInformations());
+        EmployeeController.employeeView.getDeselectButton().addActionListener(e -> EmployeeController.deselectEmployee());
         this.afficherEmployee();
     }
     public void ajouterEmployee() {
@@ -66,8 +75,10 @@ public class EmployeeController {
         String phone = employeeView.getPhoneField().getText();
         Role role = (Role) employeeView.getRoleComboBox().getSelectedItem();
         Poste poste = (Poste) employeeView.getPosteComboBox().getSelectedItem();
-        employeeModel.ajouterEmployee(nom, prenom, salaire, email, phone, role , poste);
-        this.afficherEmployee();
+        boolean ajouter = employeeModel.ajouterEmployee(nom, prenom, salaire, email, phone, role , poste);
+        if(ajouter) {
+            this.afficherEmployee();
+        }
     }
     public void afficherEmployee() {
         List<Employee> employees = employeeModel.afficherEmployee();
@@ -136,6 +147,8 @@ public class EmployeeController {
             try {
                 int id = Integer.parseInt(employeeView.getTable().getModel().getValueAt(selectedRow, 0).toString());
                 employeeModel.supprimerEmployee(id);
+                this.deselectEmployee();
+                this.afficherEmployee();
             } catch (NumberFormatException e) {
                 System.out.println("Invalid ID format.");
             }
@@ -159,6 +172,8 @@ public class EmployeeController {
                 Employee employeeToUpdate = employeeModel.findById(id);
                 if (employeeToUpdate != null) {
                     employeeModel.updateEmployee(employeeToUpdate,id, nom, prenom, email, salaire, phone, role, poste);
+                    this.deselectEmployee();
+                    this.afficherEmployee();
                 } else {
                     EmployeeView.ModifierFail("L'employé avec l'ID spécifié n'existe pas.");
                 }
@@ -185,7 +200,6 @@ public class EmployeeController {
         boolean check = LoginModel.getIsAdmin();
         check = true;////// BINMA 9ADINA HOLIDAYS O LOGIN 
         if(check == true){
-            EmployeeView employeeView = EmployeeView.getInstance();
             employeeView.getNomField().setText("");
             employeeView.getPrenomField().setText("");
             employeeView.getSalaireField().setText("");
@@ -195,16 +209,36 @@ public class EmployeeController {
             employeeView.getPosteComboBox().setSelectedIndex(-1);
             return;
         }
-        if(check == false){
-            EmployeeView limitedView = LimitedView.getLimitedInstance();
-            limitedView.getNomField().setText("");
-            limitedView.getPrenomField().setText("");
-            limitedView.getSalaireField().setText("");
-            limitedView.getEmailField().setText("");
-            limitedView.getPhoneField().setText("");
-            limitedView.getRoleComboBox().setSelectedIndex(-1);
-            limitedView.getPosteComboBox().setSelectedIndex(-1);
+    }
+    public void setEmployeeInformations() {
+        if (isDeselecting) return;
+        int selectedRow = employeeView.getTable().getSelectedRow();
+        if (selectedRow == -1) {
             return;
         }
+        int id = Integer.parseInt(employeeView.getTable().getModel().getValueAt(selectedRow, 0).toString());
+        Employee employee = employeeModel.findById(id);
+        employeeView.getNomField().setText(employee.getNom());
+        employeeView.getPrenomField().setText(employee.getPrenom());
+        employeeView.getSalaireField().setText(String.valueOf(employee.getSalaire()));
+        employeeView.getEmailField().setText(employee.getEmail());
+        employeeView.getPhoneField().setText(employee.getPhone());
+        employeeView.getRoleComboBox().setSelectedItem(employee.getRole());
+        employeeView.getPosteComboBox().setSelectedItem(employee.getPoste());
+        employeeView.getDeselectButton().setVisible(true);
+    }
+
+    public static void deselectEmployee() {
+        isDeselecting = true;
+        employeeView.getNomField().setText("");
+        employeeView.getPrenomField().setText("");
+        employeeView.getSalaireField().setText("");
+        employeeView.getEmailField().setText("");
+        employeeView.getPhoneField().setText("");
+        employeeView.getRoleComboBox().setSelectedIndex(-1);
+        employeeView.getPosteComboBox().setSelectedIndex(-1);
+        employeeView.getDeselectButton().setVisible(false);
+        employeeView.getTable().clearSelection();
+        isDeselecting = false;
     }
 }

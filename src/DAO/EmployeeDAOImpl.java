@@ -20,8 +20,8 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
     }
     @Override
     public List<Employee> afficher() {
-        String SQL = "SELECT * FROM employee";
         EmployeeController.viderLesChamps();
+        String SQL = "SELECT * FROM employee";
         List<Employee> employees = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             try (ResultSet rset = stmt.executeQuery()) {
@@ -47,9 +47,8 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
         return employees;
     }
     @Override
-    public void ajouter(Employee employee) {
+    public boolean ajouter(Employee employee) {
         String SQL = "INSERT INTO employee (nom, prenom, salaire, email, phone, role, poste, holidayBalance) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, employee.getNom());
             stmt.setString(2, employee.getPrenom());
@@ -61,15 +60,18 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             stmt.setInt(8, employee.getHolidayBalance());
             stmt.executeUpdate();
             HolidayController.setEmployeesInComboBox();
+            EmployeeController.viderLesChamps();
             EmployeeView.AjouterSuccess(employee);
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
     @Override
     public List<Employee> findByEmail(String email) {
         String SQL = "SELECT * FROM employee WHERE email = ?";
-        EmployeeController.viderLesChamps();
+        // EmployeeController.viderLesChamps();
         List<Employee> employees = new ArrayList<Employee>();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, email);
@@ -80,9 +82,6 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        if (employees.isEmpty()) {
-            EmployeeView.AfficherFail("Aucun employé a été trouvé avec cet adresse Email.");
         }
         return employees;
     }
@@ -151,7 +150,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
     public List<Employee> findByPhone(String phone) {
         String SQL = "SELECT * FROM employee WHERE phone = ?";
         List<Employee> employees = new ArrayList<Employee>();
-        EmployeeController.viderLesChamps();
+        // EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, phone);
             try (ResultSet rset = stmt.executeQuery()) {
@@ -171,7 +170,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
     public List<Employee> findBySalaire(double salaire) {
         String SQL = "SELECT * FROM employee WHERE salaire = ?";
         List<Employee> employees = new ArrayList<Employee>();
-        EmployeeController.viderLesChamps();
+        // EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setDouble(1, salaire);
             try (ResultSet rset = stmt.executeQuery()) {
@@ -209,7 +208,6 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
     @Override
     public void modifier(Employee employee, int EmployeeId) {
         String SQL = "UPDATE employee SET nom = ?, prenom = ?, salaire = ?, email = ?, phone = ?, role = ?, poste = ? WHERE id = ?";
-        EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, employee.getNom());
             stmt.setString(2, employee.getPrenom());
@@ -221,6 +219,7 @@ public class EmployeeDAOImpl implements EmployeeDAOI , GeneriqueDAOI<Employee>{
             stmt.setInt(8, EmployeeId);
             stmt.executeUpdate();
             HolidayController.setEmployeesInComboBox();
+            EmployeeController.viderLesChamps();
             EmployeeView.ModifierSuccess();
         } catch (SQLException e) {
             e.printStackTrace();

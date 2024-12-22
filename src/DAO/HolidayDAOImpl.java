@@ -65,7 +65,7 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
         return holidays;
     }
     @Override
-    public void ajouter(Holiday holiday) {
+    public boolean ajouter(Holiday holiday) {
         String SQL = "INSERT INTO holiday (employee_id, type, start, end) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, holiday.getIdEmployee());
@@ -76,7 +76,9 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
             HolidayView.success("Congé ajouté avec succéss !");
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
     
     @Override
@@ -119,7 +121,6 @@ public class HolidayDAOImpl implements GeneriqueDAOI<Holiday> {
     public Employee findById(int EmployeeId) {
         String SQL = "SELECT * FROM employee WHERE id = ?";
         Employee employee = null;
-        EmployeeController.viderLesChamps();
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, EmployeeId);
             try (ResultSet rset = stmt.executeQuery()) {                

@@ -24,7 +24,6 @@ public class LoginModel {
             LoginView.LoginFail("Nom d'utilisateur ou mot de passe incorrect.");
             return false;
         }
-        LoginView.LoginSuccess(username);
         Employee employee = dao.FindById(CheckId);
         if(employee.getRole() == Role.ADMIN){
             isAdmin = true;

@@ -26,6 +26,7 @@ public class EmployeeView extends JFrame {
     protected JButton Supprimer = new JButton("Supprimer");
     protected JButton Afficher = new JButton("Afficher");
     protected JButton CreerCompte = new JButton("Créer un compte");
+    private JButton deselectButton = new JButton("Désélectionner");
     protected JLabel NomLabel;
     protected JTextField Nom;
     protected JLabel PrenomLabel;
@@ -94,13 +95,15 @@ public class EmployeeView extends JFrame {
         ButtonsContainer.add(Supprimer);
         ButtonsContainer.add(Afficher);
         ButtonsContainer.add(CreerCompte);
+        ButtonsContainer.add(deselectButton);
+        deselectButton.setVisible(false);
         setVisible(true);
     }
     public static void AjouterSuccess(Employee employee){
         JOptionPane.showMessageDialog(null, "L'employé " + employee.getNom() + " " + employee.getPrenom() + " a été ajouté avec succès");
     }
     public static void AjouterFail(String message){
-        JOptionPane.showMessageDialog(null, "L'employé n'a pas été ajouté. " + message);
+        JOptionPane.showMessageDialog(null, message);
     }
     public static void AfficherFail(String message){
         JOptionPane.showMessageDialog(null, message);
@@ -205,5 +208,12 @@ public class EmployeeView extends JFrame {
     }
     public static EmployeeView getInstance() {
         return INSTANCE;
+    }
+    public JButton getDeselectButton() {
+        return deselectButton;
+    }
+
+    public void setDeselectButton(JButton deselectButton) {
+        this.deselectButton = deselectButton;
     }
 }
