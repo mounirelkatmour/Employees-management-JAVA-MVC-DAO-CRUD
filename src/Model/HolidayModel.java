@@ -128,8 +128,9 @@ public class HolidayModel {
             dao.modifierEmployeeBalance(oldEmployee, oldEmployee.getId());
             dao.supprimer(holidayId);
         }   
-        public static Holiday afficherHolidayLogged(int idEmployee) {
+        public static List<Holiday> afficherHolidaysLogged(int idEmployee) {
             return dao.findByIdLoggedHoliday(idEmployee);
     }
+
 }
 

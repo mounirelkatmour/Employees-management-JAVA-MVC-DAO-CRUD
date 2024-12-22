@@ -139,11 +139,13 @@ public class HolidayController {
         holidayView.setDateFin("YYYY-MM-DD");
     }
     public void afficherHolidayLogged(){
-        Holiday holiday = HolidayModel.afficherHolidayLogged(employeeLogged.getId());
+        List<Holiday> holidays = HolidayModel.afficherHolidaysLogged(employeeLogged.getId());
         DefaultTableModel model = (DefaultTableModel) holidayView.getHolidayTable().getModel();
         model.setRowCount(0);
-        if (holiday != null) {
-            model.addRow(new Object[]{holiday.getId(), employeeLogged.getNom() + " " + employeeLogged.getPrenom(), holiday.getType(), holiday.getStart(), holiday.getEnd()});
+        if (!holidays.isEmpty()) {
+            for (Holiday holiday : holidays) {
+                model.addRow(new Object[]{holiday.getId(), employeeLogged.getNom() + " " + employeeLogged.getPrenom(), holiday.getType(), holiday.getStart(), holiday.getEnd()});
+            }
         }else{
             holidayView.getTable().setModel(new DefaultTableModel(new Object[]{"Aucun holiday à afficher"}, 0));
         }
