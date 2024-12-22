@@ -8,7 +8,9 @@ import Model.LoginModel;
 import Model.Role;
 import View.AdminView;
 import View.EmployeeView;
+import View.EmployeeViewManager;
 import View.HolidayView;
+import View.HolidayViewManager;
 import View.LoginView;
 
 public class LoginController {
@@ -33,15 +35,19 @@ public class LoginController {
         }
         if (role == Role.MANAGER) {
             loginView.dispose();
-            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
-            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
-            AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
+            EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeViewManager.getInstance());
+            HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayViewManager.getInstance());
+            AdminView.getInstance(EmployeeViewManager.getInstance(),HolidayViewManager.getInstance());
+            HolidayView.getInstance().dispose();
+            EmployeeView.getInstance().dispose();
         }
         if (role == Role.EMPLOYEE) {
             loginView.dispose();
             EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance());
             HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance());
             AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
+            HolidayView.getInstance().dispose();
+            EmployeeView.getInstance().dispose();
         }
     }
 }

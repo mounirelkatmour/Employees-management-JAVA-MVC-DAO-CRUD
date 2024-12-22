@@ -7,31 +7,31 @@ import javax.swing.table.DefaultTableModel;
 import Model.HolidayType;
 
 public class HolidayView extends JFrame {
-    private static final HolidayView INSTANCE = new HolidayView();
-    private JPanel generalPanel = new JPanel();
-    private JLabel nomEmployeLabel = new JLabel("Nom de l'employé");
-    private JComboBox<String> nomEmployeComboBox = new JComboBox<>();
-    private JLabel typeLabel = new JLabel("Type");
-    private JComboBox<HolidayType> typeComboBox = new JComboBox<>(HolidayType.values());
-    private JLabel dateDebutLabel = new JLabel("Date de début");
-    private JTextField dateDebut = new JTextField("YYYY-MM-DD");
-    private JLabel dateFinLabel = new JLabel("Date de fin");
-    private JTextField dateFin = new JTextField("YYYY-MM-DD");
-    private DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Employé","Type","Date début","Date fin"}, 0){
+    protected static final HolidayView INSTANCE = new HolidayView();
+    protected JPanel generalPanel = new JPanel();
+    protected JLabel nomEmployeLabel = new JLabel("Nom de l'employé");
+    protected JComboBox<String> nomEmployeComboBox = new JComboBox<>();
+    protected JLabel typeLabel = new JLabel("Type");
+    protected JComboBox<HolidayType> typeComboBox = new JComboBox<>(HolidayType.values());
+    protected JLabel dateDebutLabel = new JLabel("Date de début");
+    protected JTextField dateDebut = new JTextField("YYYY-MM-DD");
+    protected JLabel dateFinLabel = new JLabel("Date de fin");
+    protected JTextField dateFin = new JTextField("YYYY-MM-DD");
+    protected DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Id","Employé","Type","Date début","Date fin"}, 0){
         @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
     };
     protected JTable holidayTable = new JTable(tableModel);
-    private JScrollPane tableScrollPane = new JScrollPane(holidayTable);
-    private JButton ajouterButton = new JButton("Ajouter");
-    private JButton modifierButton = new JButton("Modifier");
-    private JButton supprimerButton = new JButton("Supprimer");
-    private JButton afficherButton = new JButton("Afficher");
-    private JButton deselectButton = new JButton("Désélectionner");
-    private JPanel inputPanel = new JPanel();
-    private JPanel buttonPanel = new JPanel();
+    protected JScrollPane tableScrollPane = new JScrollPane(holidayTable);
+    protected JButton ajouterButton = new JButton("Ajouter");
+    protected JButton modifierButton = new JButton("Modifier");
+    protected JButton supprimerButton = new JButton("Supprimer");
+    protected JButton afficherButton = new JButton("Afficher");
+    protected JButton deselectButton = new JButton("Désélectionner");
+    protected JPanel inputPanel = new JPanel();
+    protected JPanel buttonPanel = new JPanel();
 
     public HolidayView() {
         setTitle("Gestion des holidays");
