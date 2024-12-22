@@ -21,7 +21,10 @@ public class HolidayController {
         this.holidayView = view;
         setEmployeesInComboBox();
         holidayView.getAjouterButton().addActionListener(e -> this.ajouterHoliday());
-        holidayView.getAfficherButton().addActionListener(e -> this.afficherHoliday());
+        holidayView.getAfficherButton().addActionListener(e -> {
+            this.deselectHoliday();
+            this.afficherHoliday();
+        });
         holidayView.getModifierButton().addActionListener(e -> this.ModifierHoliday());
         holidayView.getSupprimerButton().addActionListener(e -> this.supprimerHoliday());
         holidayView.getTable().getSelectionModel().addListSelectionListener(e -> this.setHolidayInformations());
@@ -38,6 +41,7 @@ public class HolidayController {
         Holiday holiday = new Holiday(1,Employeeid, type, dateDebut, dateFin);
         Employee employee = holidayModel.FindById(Employeeid);
         holidayModel.ajouterHoliday(holiday,employee);
+        this.viderLesChamps();
         this.afficherHoliday();
     }
     public void afficherHoliday() {
@@ -115,9 +119,12 @@ public class HolidayController {
         isDeselecting = true;
         holidayView.getNomEmployeComboBox().setEnabled(true);
         holidayView.getDeselectButton().setVisible(false);
-        holidayView.setDateDebut("YYYY-MM-DD");
-        holidayView.setDateFin("YYYY-MM-DD");
+        this.viderLesChamps();
         holidayView.getTable().clearSelection();
         isDeselecting = false;
+    }
+    public void viderLesChamps() {
+        holidayView.setDateDebut("YYYY-MM-DD");
+        holidayView.setDateFin("YYYY-MM-DD");
     }
 }
