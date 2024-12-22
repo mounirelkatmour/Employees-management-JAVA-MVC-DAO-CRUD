@@ -2,7 +2,9 @@ package Model;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import DAO.HolidayDAOImpl;
 import View.HolidayView;
@@ -27,6 +29,26 @@ public class HolidayModel {
         if (days <= 0) {
             HolidayView.fail("La date de fin doit venir après la date de début.");
             return;
+        }
+        List<Holiday> employeeHolidays = dao.afficher().stream()
+            .filter(h -> h.getIdEmployee() == employee.getId())
+            .sorted(Comparator.comparing(Holiday::getStart))
+            .collect(Collectors.toList());
+
+        for (int i = 0; i < employeeHolidays.size(); i++) {
+            Holiday currentHoliday = employeeHolidays.get(i);
+            LocalDate currentStart = LocalDate.parse(currentHoliday.getStart());
+            LocalDate currentEnd = LocalDate.parse(currentHoliday.getEnd());
+            LocalDate newStart = LocalDate.parse(holiday.getStart());
+            LocalDate newEnd = LocalDate.parse(holiday.getEnd());
+
+            if ((newStart.isAfter(currentEnd) || newStart.isEqual(currentEnd)) &&
+                (i + 1 == employeeHolidays.size() || newEnd.isBefore(LocalDate.parse(employeeHolidays.get(i + 1).getStart())))) {
+                continue;
+            } else {
+                HolidayView.fail("L'employé a déjà un congé pendant cette période.");
+                return;
+            }
         }
         if (employee.getHolidayBalance() >= days) {
             employee.setHolidayBalance(employee.getHolidayBalance() - days);
