@@ -27,6 +27,9 @@ public class EmployeeView extends JFrame {
     protected JButton Afficher = new JButton("Afficher");
     protected JButton CreerCompte = new JButton("Créer un compte");
     private JButton deselectButton = new JButton("Désélectionner");
+    protected JButton Deconnexion = new JButton("Deconnexion");
+    protected JButton Importer = new JButton("Importer");
+    protected JButton Exporter = new JButton("Exporter");
     protected JLabel NomLabel;
     protected JTextField Nom;
     protected JLabel PrenomLabel;
@@ -96,11 +99,26 @@ public class EmployeeView extends JFrame {
         ButtonsContainer.add(Afficher);
         ButtonsContainer.add(CreerCompte);
         ButtonsContainer.add(deselectButton);
+        ButtonsContainer.add(Deconnexion);
+        ButtonsContainer.add(Importer);
+        ButtonsContainer.add(Exporter);
         deselectButton.setVisible(false);
         setVisible(true);
     }
     public static void AjouterSuccess(Employee employee){
         JOptionPane.showMessageDialog(null, "L'employé " + employee.getNom() + " " + employee.getPrenom() + " a été ajouté avec succès");
+    }
+    public static void ImportationSuccess(){
+        JOptionPane.showMessageDialog(null,"Le fichier a bien été importé.");
+    }
+    public static void ImportationFail(){
+        JOptionPane.showMessageDialog(null,"Erreur lors de l'importation du fichier.");
+    }
+    public static void ExportationSuccess(){
+        JOptionPane.showMessageDialog(null,"Le fichier a bien été exporté.");
+    }
+    public static void ExportationFail(){
+        JOptionPane.showMessageDialog(null,"Erreur lors de l'exportation du fichier.");
     }
     public static void AjouterFail(String message){
         JOptionPane.showMessageDialog(null, message);
@@ -215,5 +233,16 @@ public class EmployeeView extends JFrame {
 
     public void setDeselectButton(JButton deselectButton) {
         this.deselectButton = deselectButton;
+    }
+    public JButton getDeconnexionButton() {
+        return Deconnexion;
+    }
+
+    public JButton getImporterButton() {
+        return Importer;
+    }
+
+    public JButton getExporterButton() {
+        return Exporter;
     }
 }

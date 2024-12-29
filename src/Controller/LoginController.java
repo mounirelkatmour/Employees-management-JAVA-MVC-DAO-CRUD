@@ -40,13 +40,13 @@ public class LoginController {
             loginView.dispose();
             EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeView.getInstance(),employee);
             HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayView.getInstance(),employee);
-            AdminView.getInstance(EmployeeView.getInstance(),HolidayView.getInstance());
+            new AdminView(EmployeeView.getInstance(),HolidayView.getInstance());
         }
         if (role == Role.MANAGER) {
             loginView.dispose();
             EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeViewManager.getInstance(),employee);
             HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayViewManager.getInstance(),employee);
-            AdminView.getInstance(EmployeeViewManager.getInstance(),HolidayViewManager.getInstance());
+            new AdminView(EmployeeViewManager.getInstance(),HolidayViewManager.getInstance());
             HolidayView.getInstance().dispose();
             EmployeeView.getInstance().dispose();
         }
@@ -54,7 +54,7 @@ public class LoginController {
             loginView.dispose();
             EmployeeController employeeController = new EmployeeController(new EmployeeModel(new EmployeeDAOImpl()), EmployeeViewEmployee.getInstance(),employee);
             HolidayController holidayController = new HolidayController(new HolidayModel(new HolidayDAOImpl()), HolidayViewEmployee.getInstance(),employee);
-            AdminView.getInstance(EmployeeViewEmployee.getInstance(),HolidayViewEmployee.getInstance());
+            new AdminView(EmployeeViewEmployee.getInstance(),HolidayViewEmployee.getInstance());
             HolidayView.getInstance().dispose();
             EmployeeView.getInstance().dispose();
         }
